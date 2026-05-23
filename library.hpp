@@ -33,9 +33,9 @@ namespace r82labs::learn_with_physics {
         explicit Simulator(const float g = 9.81f) : gravity(g) {}
 
         Point get_position_at_time(const Slingshot& slingshot, const Projectile& proj,
-                                  const float draw_length, const float angle_radians, const float time) const;
+                                   float draw_length, float angle_radians, float time) const;
 
         std::vector<Point> calculate_full_trajectory(const Slingshot& slingshot, const Projectile& proj,
-                                                     const float draw_length, const float angle_radians, const float time_step) const;
+                                                      float draw_length, float angle_radians, float time_step) const;
     };
 }
