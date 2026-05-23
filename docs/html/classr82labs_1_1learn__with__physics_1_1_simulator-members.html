@@ -17,13 +17,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -101,9 +103,9 @@ $(function(){initNavTree('classr82labs_1_1learn__with__physics_1_1_simulator.htm
 
 <p>This is the complete list of members for <a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html">r82labs::learn_with_physics::Simulator</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html#afbd9ca6cb52215a7a2beb9f26a6cf2f5">calculate_full_trajectory</a>(const Slingshot &amp;slingshot, const Projectile &amp;proj, const float draw_length, const float angle_radians, const float time_step) const</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html">r82labs::learn_with_physics::Simulator</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html#a7e623d04c79f350a3939ecc4dd829a2d">get_position_at_time</a>(const Slingshot &amp;slingshot, const Projectile &amp;proj, const float draw_length, const float angle_radians, const float time) const</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html">r82labs::learn_with_physics::Simulator</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html#a8a2ce89164ab1841c258288361b9a101">Simulator</a>(const float g=9.81f)</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html">r82labs::learn_with_physics::Simulator</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html#a28680f064c3bd22ed9f8c041beda0378">calculate_full_trajectory</a>(const Slingshot &amp;slingshot, const Projectile &amp;proj, float draw_length, float angle_radians, float time_step) const</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html">r82labs::learn_with_physics::Simulator</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html#af10f7574b6dd8680da8ddd4931df2e33">get_position_at_time</a>(const Slingshot &amp;slingshot, const Projectile &amp;proj, float draw_length, float angle_radians, float time) const</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html">r82labs::learn_with_physics::Simulator</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html#a23e58ec8f2008fac62ec01b8088354df">Simulator</a>(float g=9.81f)</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html">r82labs::learn_with_physics::Simulator</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

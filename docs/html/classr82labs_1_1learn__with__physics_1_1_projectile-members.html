@@ -17,13 +17,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -102,7 +104,7 @@ $(function(){initNavTree('classr82labs_1_1learn__with__physics_1_1_projectile.ht
 <p>This is the complete list of members for <a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html">r82labs::learn_with_physics::Projectile</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html#a65b339de876f9c00e21cfe4dcedae8fd">get_mass</a>() const</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html">r82labs::learn_with_physics::Projectile</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html#af49daf80761c4cbee036e078a21152b7">Projectile</a>(const float m)</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html">r82labs::learn_with_physics::Projectile</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html#ae8b6dc7fa6a772be505b9cccb30893ef">Projectile</a>(float m)</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html">r82labs::learn_with_physics::Projectile</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

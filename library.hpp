@@ -79,7 +79,7 @@ namespace r82labs::learn_with_physics {
     public:
         /**
          * @brief Constructs a Simulator with a specific gravity constant.
-         * @param g Gravity in m/s^2 (defaults to 9.81).
+         * @param g Gravity in \f$ m/s^2 \f$ (defaults to 9.81).
          */
         explicit Simulator(float g = 9.81f) : gravity(g) {}
 

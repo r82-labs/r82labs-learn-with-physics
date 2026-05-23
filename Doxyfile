@@ -3,4 +3,5 @@ OUTPUT_DIRECTORY       = docs
 INPUT                  = library.hpp
 GENERATE_LATEX         = NO
 USE_MATHJAX            = YES
+MATHJAX_VERSION        = MATHJAX_3
 MATHJAX_RELPATH        = https://cdn.jsdelivr.net/npm/mathjax@3

@@ -17,13 +17,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -101,8 +103,8 @@ $(function(){initNavTree('classr82labs_1_1learn__with__physics_1_1_slingshot.htm
 
 <p>This is the complete list of members for <a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">r82labs::learn_with_physics::Slingshot</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html#a03dd2388ca7e3c91d2658ca00008d9f2">get_launch_velocity</a>(const float draw_length_meters, const float mass_kg) const</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">r82labs::learn_with_physics::Slingshot</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html#a958f1e31ad43343bdafbcc44ec6dd845">Slingshot</a>(const float k, const float eff=0.75f)</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">r82labs::learn_with_physics::Slingshot</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html#ad197b7d13afbe21bfa1432eb94f938b0">get_launch_velocity</a>(float draw_length_meters, float mass_kg) const</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">r82labs::learn_with_physics::Slingshot</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html#ab4026bbf8c4b51b4882c8c0e78d06823">Slingshot</a>(float k, float eff=0.75f)</td><td class="entry"><a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">r82labs::learn_with_physics::Slingshot</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">explicit</span></td></tr>
 </table></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

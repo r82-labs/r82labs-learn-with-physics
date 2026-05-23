@@ -17,13 +17,15 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX","output/HTML-CSS"],
-});
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -106,18 +108,18 @@ $(function(){initNavTree('classr82labs_1_1learn__with__physics_1_1_simulator.htm
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a8a2ce89164ab1841c258288361b9a101" id="r_a8a2ce89164ab1841c258288361b9a101"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8a2ce89164ab1841c258288361b9a101">Simulator</a> (const float g=9.81f)</td></tr>
-<tr class="memdesc:a8a2ce89164ab1841c258288361b9a101"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html" title="Handles trajectory calculations for projectiles.">Simulator</a> with a specific gravity constant.  <br /></td></tr>
-<tr class="memitem:a7e623d04c79f350a3939ecc4dd829a2d" id="r_a7e623d04c79f350a3939ecc4dd829a2d"><td class="memItemLeft"><a class="el" href="structr82labs_1_1learn__with__physics_1_1_point.html">Point</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7e623d04c79f350a3939ecc4dd829a2d">get_position_at_time</a> (const <a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">Slingshot</a> &amp;slingshot, const <a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html">Projectile</a> &amp;proj, const float draw_length, const float angle_radians, const float time) const</td></tr>
-<tr class="memdesc:a7e623d04c79f350a3939ecc4dd829a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the position of a projectile at a specific time.  <br /></td></tr>
-<tr class="memitem:afbd9ca6cb52215a7a2beb9f26a6cf2f5" id="r_afbd9ca6cb52215a7a2beb9f26a6cf2f5"><td class="memItemLeft">std::vector&lt; <a class="el" href="structr82labs_1_1learn__with__physics_1_1_point.html">Point</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#afbd9ca6cb52215a7a2beb9f26a6cf2f5">calculate_full_trajectory</a> (const <a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">Slingshot</a> &amp;slingshot, const <a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html">Projectile</a> &amp;proj, const float draw_length, const float angle_radians, const float time_step) const</td></tr>
-<tr class="memdesc:afbd9ca6cb52215a7a2beb9f26a6cf2f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the full flight trajectory until the projectile hits the ground.  <br /></td></tr>
+<tr class="memitem:a23e58ec8f2008fac62ec01b8088354df" id="r_a23e58ec8f2008fac62ec01b8088354df"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a23e58ec8f2008fac62ec01b8088354df">Simulator</a> (float g=9.81f)</td></tr>
+<tr class="memdesc:a23e58ec8f2008fac62ec01b8088354df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html" title="Handles trajectory calculations for projectiles.">Simulator</a> with a specific gravity constant.  <br /></td></tr>
+<tr class="memitem:af10f7574b6dd8680da8ddd4931df2e33" id="r_af10f7574b6dd8680da8ddd4931df2e33"><td class="memItemLeft"><a class="el" href="structr82labs_1_1learn__with__physics_1_1_point.html">Point</a>&#160;</td><td class="memItemRight"><a class="el" href="#af10f7574b6dd8680da8ddd4931df2e33">get_position_at_time</a> (const <a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">Slingshot</a> &amp;slingshot, const <a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html">Projectile</a> &amp;proj, float draw_length, float angle_radians, float time) const</td></tr>
+<tr class="memdesc:af10f7574b6dd8680da8ddd4931df2e33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the position of a projectile at a specific time.  <br /></td></tr>
+<tr class="memitem:a28680f064c3bd22ed9f8c041beda0378" id="r_a28680f064c3bd22ed9f8c041beda0378"><td class="memItemLeft">std::vector&lt; <a class="el" href="structr82labs_1_1learn__with__physics_1_1_point.html">Point</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a28680f064c3bd22ed9f8c041beda0378">calculate_full_trajectory</a> (const <a class="el" href="classr82labs_1_1learn__with__physics_1_1_slingshot.html">Slingshot</a> &amp;slingshot, const <a class="el" href="classr82labs_1_1learn__with__physics_1_1_projectile.html">Projectile</a> &amp;proj, float draw_length, float angle_radians, float time_step) const</td></tr>
+<tr class="memdesc:a28680f064c3bd22ed9f8c041beda0378"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the full flight trajectory until the projectile hits the ground.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles trajectory calculations for projectiles. </p>
 </div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8a2ce89164ab1841c258288361b9a101" name="a8a2ce89164ab1841c258288361b9a101"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a2ce89164ab1841c258288361b9a101">&#9670;&#160;</a></span>Simulator()</h2>
+<a id="a23e58ec8f2008fac62ec01b8088354df" name="a23e58ec8f2008fac62ec01b8088354df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23e58ec8f2008fac62ec01b8088354df">&#9670;&#160;</a></span>Simulator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -128,7 +130,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">r82labs::learn_with_physics::Simulator::Simulator </td>
           <td>(</td>
-          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>g</em></span><span class="paramdefsep"> = </span><span class="paramdefval">9.81f</span></td><td>)</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>g</em></span><span class="paramdefsep"> = </span><span class="paramdefval">9.81f</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -142,7 +144,7 @@ Public Member Functions</h2></td></tr>
 <p>Constructs a <a class="el" href="classr82labs_1_1learn__with__physics_1_1_simulator.html" title="Handles trajectory calculations for projectiles.">Simulator</a> with a specific gravity constant. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">g</td><td>Gravity in m/s^2 (defaults to 9.81). </td></tr>
+    <tr><td class="paramname">g</td><td>Gravity in \( m/s^2 \) (defaults to 9.81). </td></tr>
   </table>
   </dd>
 </dl>
@@ -150,8 +152,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="afbd9ca6cb52215a7a2beb9f26a6cf2f5" name="afbd9ca6cb52215a7a2beb9f26a6cf2f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbd9ca6cb52215a7a2beb9f26a6cf2f5">&#9670;&#160;</a></span>calculate_full_trajectory()</h2>
+<a id="a28680f064c3bd22ed9f8c041beda0378" name="a28680f064c3bd22ed9f8c041beda0378"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28680f064c3bd22ed9f8c041beda0378">&#9670;&#160;</a></span>calculate_full_trajectory()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -169,17 +171,17 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>draw_length</em></span>, </td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>draw_length</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>angle_radians</em></span>, </td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>angle_radians</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>time_step</em></span>&#160;) const</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>time_step</em></span>&#160;) const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -199,8 +201,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7e623d04c79f350a3939ecc4dd829a2d" name="a7e623d04c79f350a3939ecc4dd829a2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e623d04c79f350a3939ecc4dd829a2d">&#9670;&#160;</a></span>get_position_at_time()</h2>
+<a id="af10f7574b6dd8680da8ddd4931df2e33" name="af10f7574b6dd8680da8ddd4931df2e33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af10f7574b6dd8680da8ddd4931df2e33">&#9670;&#160;</a></span>get_position_at_time()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -218,17 +220,17 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>draw_length</em></span>, </td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>draw_length</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>angle_radians</em></span>, </td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>angle_radians</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>time</em></span>&#160;) const</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>time</em></span>&#160;) const</td>
         </tr>
       </table>
 </div><div class="memdoc">
