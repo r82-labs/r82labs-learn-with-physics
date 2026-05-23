@@ -3,39 +3,39 @@
 
 namespace r82labs::learn_with_physics {
 
-    struct Vector2 {
+    struct Point {
         float x, y;
     };
 
     class Slingshot {
-        float bandStiffness;
-        float efficiency;
+        const float band_stiffness;
+        const float efficiency;
 
     public:
-        explicit Slingshot(float k, float eff = 0.75f)
-            : bandStiffness(k), efficiency(eff) {}
+        explicit Slingshot(const float k, const float eff = 0.75f)
+            : band_stiffness(k), efficiency(eff) {}
 
-        float getLaunchVelocity(float drawLengthMeters, float massKg) const;
+        float get_launch_velocity(const float draw_length_meters, const float mass_kg) const;
     };
 
     class Projectile {
-        float mass;
+        const float mass;
 
     public:
         explicit Projectile(const float m) : mass(m) {}
-        float getMass() const { return mass; }
+        float get_mass() const { return mass; }
     };
 
     class Simulator {
-        float gravity;
+        const float gravity;
 
     public:
-        explicit Simulator(float g = 9.81f) : gravity(g) {}
+        explicit Simulator(const float g = 9.81f) : gravity(g) {}
 
-        Vector2 getPositionAtTime(const Slingshot& slingshot, const Projectile& proj,
-                                  float drawLength, float angleRadians, float time) const;
+        Point get_position_at_time(const Slingshot& slingshot, const Projectile& proj,
+                                  const float draw_length, const float angle_radians, const float time) const;
 
-        std::vector<Vector2> calculateFullTrajectory(const Slingshot& slingshot, const Projectile& proj,
-                                                     float drawLength, float angleRadians, float timeStep) const;
+        std::vector<Point> calculate_full_trajectory(const Slingshot& slingshot, const Projectile& proj,
+                                                     const float draw_length, const float angle_radians, const float time_step) const;
     };
 }
