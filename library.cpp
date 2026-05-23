@@ -2,7 +2,7 @@
 
 namespace r82labs::learn_with_physics {
 
-    float Slingshot::getLaunchVelocity(float drawLengthMeters, float massKg) const {
+    float Slingshot::getLaunchVelocity(const float drawLengthMeters, const float massKg) const {
         if (massKg <= 0.0f) return 0.0f;
 
         return drawLengthMeters * std::sqrt((efficiency * bandStiffness) / massKg);
