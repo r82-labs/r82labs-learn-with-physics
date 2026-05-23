@@ -15,7 +15,7 @@ namespace r82labs::learn_with_physics {
         explicit Slingshot(const float k, const float eff = 0.75f)
             : band_stiffness(k), efficiency(eff) {}
 
-        float get_launch_velocity(const float draw_length_meters, const float mass_kg) const;
+        float get_launch_velocity(float draw_length_meters, float mass_kg) const;
     };
 
     class Projectile {
