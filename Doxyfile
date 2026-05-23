@@ -1,0 +1,6 @@
+PROJECT_NAME           = "Slingshot Physics Library"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = library.hpp
+GENERATE_LATEX         = NO
+USE_MATHJAX            = YES
+MATHJAX_RELPATH        = https://cdn.jsdelivr.net/npm/mathjax@3
