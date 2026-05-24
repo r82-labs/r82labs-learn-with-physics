@@ -2,6 +2,13 @@ PROJECT_NAME           = "Slingshot Physics Library"
 OUTPUT_DIRECTORY       = docs
 INPUT                  = library.hpp
 GENERATE_LATEX         = NO
+
+# Modern UI Settings
+GENERATE_TREEVIEW      = YES
+HTML_EXTRA_STYLESHEET  = theme/doxygen-awesome.css
+HTML_COLORSTYLE        = LIGHT
+
+# MathJax for Physics formulas
 USE_MATHJAX            = YES
 MATHJAX_VERSION        = MATHJAX_3
 MATHJAX_RELPATH        = https://cdn.jsdelivr.net/npm/mathjax@3

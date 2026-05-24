@@ -1,11 +1,47 @@
 #pragma once
 #include <vector>
+#include <numbers>
+#include <stdexcept>
 
 /**
  * @namespace r82labs::learn_with_physics
  * @brief Core physics simulation components for slingshot mechanics.
  */
 namespace r82labs::learn_with_physics {
+
+    /**
+     * @enum AngleUnit
+     * @brief Units for angular measurements.
+     */
+    enum class AngleUnit {
+        radians, ///< Angle in radians.
+        degrees  ///< Angle in degrees.
+    };
+
+    /**
+     * @enum LaunchDirection
+     * @brief Directions for the launch.
+     */
+    enum class LaunchDirection {
+        right, ///< Launch towards positive X.
+        left   ///< Launch towards negative X.
+    };
+
+    /**
+     * @class MathUtils
+     * @brief Utility functions for physical and mathematical calculations.
+     */
+    class MathUtils {
+    public:
+        /**
+         * @brief Converts an angle to radians and validates it is within [0, PI/2].
+         * @param angle The input angle value.
+         * @param unit The unit of the input angle.
+         * @return float The angle value in radians.
+         * @throws std::out_of_range if the angle is not between 0 and 90 degrees (inclusive).
+         */
+        static float to_radians(float angle, AngleUnit unit);
+    };
 
     /**
      * @struct Point
@@ -93,23 +129,33 @@ namespace r82labs::learn_with_physics {
          * @param slingshot The Slingshot used for launch.
          * @param proj The Projectile being simulated.
          * @param draw_length The draw length in meters.
-         * @param angle_radians Launch angle in radians.
+         * @param angle The launch angle.
          * @param time Time elapsed since launch in seconds.
+         * @param unit The unit of the provided angle (defaults to radians).
+         * @param direction The launch direction (defaults to right).
          * @return Point The (x, y) coordinates at time t.
+         * @throws std::out_of_range if the angle is invalid.
          */
         Point get_position_at_time(const Slingshot& slingshot, const Projectile& proj,
-                                  float draw_length, float angle_radians, float time) const;
+                                  float draw_length, float angle, float time, 
+                                  AngleUnit unit = AngleUnit::radians,
+                                  LaunchDirection direction = LaunchDirection::right) const;
 
         /**
          * @brief Calculates the full flight trajectory until the projectile hits the ground.
          * @param slingshot The Slingshot used for launch.
          * @param proj The Projectile being simulated.
          * @param draw_length The draw length in meters.
-         * @param angle_radians Launch angle in radians.
+         * @param angle The launch angle.
          * @param time_step Time interval between trajectory points.
+         * @param unit The unit of the provided angle (defaults to radians).
+         * @param direction The launch direction (defaults to right).
          * @return std::vector<Point> A sequence of points representing the flight path.
+         * @throws std::out_of_range if the angle is invalid.
          */
         std::vector<Point> calculate_full_trajectory(const Slingshot& slingshot, const Projectile& proj,
-                                                     float draw_length, float angle_radians, float time_step) const;
+                                                     float draw_length, float angle, float time_step,
+                                                     AngleUnit unit = AngleUnit::radians,
+                                                     LaunchDirection direction = LaunchDirection::right) const;
     };
 }
