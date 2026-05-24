@@ -5,7 +5,7 @@ GENERATE_LATEX         = NO
 
 # Modern UI Settings
 GENERATE_TREEVIEW      = YES
-HTML_EXTRA_STYLESHEET  = theme/doxygen-awesome.css
+HTML_EXTRA_STYLESHEET  = docs/theme/doxygen-awesome.css
 HTML_COLORSTYLE        = LIGHT
 
 # MathJax for Physics formulas

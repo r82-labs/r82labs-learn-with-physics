@@ -71,7 +71,8 @@ Testing/
 .cache/
 
 # Documentation and Coverage
-docs/
+docs/*
+!docs/theme/
 coverage_report/
 coverage_report_release/
 *.info
