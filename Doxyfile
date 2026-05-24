@@ -21,11 +21,12 @@ MATHJAX_RELPATH        = https://cdn.jsdelivr.net/npm/mathjax@3
 # C++ Logic Fixes
 BUILTIN_STL_SUPPORT    = YES
 OPTIMIZE_OUTPUT_FOR_C  = NO
-IDL_PROPERTY_SUPPORT   = NO
-EXTRACT_LOCAL_CLASSES  = YES
-EXTRACT_LOCAL_METHODS  = YES
 HIDE_UNDOC_MEMBERS     = NO
 
+# Fix for Namespace Members list
+# This forces classes/structs to be grouped under namespace members
+TYPEDEF_HIDES_STRUCT   = NO
+EXTRACT_LOCAL_CLASSES  = YES
+
 # Ensure symbols are linked properly
-INLINE_SOURCES         = NO
 SOURCE_BROWSER         = YES
