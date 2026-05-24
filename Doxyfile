@@ -1,6 +1,11 @@
 PROJECT_NAME           = "Slingshot Physics Library"
 OUTPUT_DIRECTORY       = docs
-INPUT                  = src/
+INPUT                  = src
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+SHOW_NAMESPACES        = YES
 GENERATE_LATEX         = NO
 
 # Modern UI Settings
@@ -12,3 +17,6 @@ HTML_COLORSTYLE        = LIGHT
 USE_MATHJAX            = YES
 MATHJAX_VERSION        = MATHJAX_3
 MATHJAX_RELPATH        = https://cdn.jsdelivr.net/npm/mathjax@3
+
+# Helpful C++ settings
+BUILTIN_STL_SUPPORT    = YES
