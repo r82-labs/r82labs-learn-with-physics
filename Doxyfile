@@ -1,6 +1,6 @@
 PROJECT_NAME           = "Slingshot Physics Library"
 OUTPUT_DIRECTORY       = docs
-INPUT                  = library.hpp
+INPUT                  = src/
 GENERATE_LATEX         = NO
 
 # Modern UI Settings
