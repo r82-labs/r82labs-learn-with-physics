@@ -1,7 +1,7 @@
 # Slingshot Physics Library
 
 [![C++ CI/CD Pipeline](https://github.com/r82-labs/r82labs-learn-with-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/r82-labs/r82labs-learn-with-physics/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/r82-labs/r82labs-learn-with-physics/graph/badge.svg?token=${{ secrets.CODECOV_TOKEN }})](https://codecov.io/gh/r82-labs/r82labs-learn-with-physics)
+[![codecov](https://codecov.io/gh/r82-labs/r82labs-learn-with-physics/graph/badge.svg?token=SL0RSPMWGV)](https://codecov.io/gh/r82-labs/r82labs-learn-with-physics)
 
 A modern C++20 library for simulating slingshot mechanics and projectile motion with high precision.
 
