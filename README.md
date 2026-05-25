@@ -37,5 +37,21 @@ ctest --output-on-failure
 The latest API documentation is automatically published to GitHub Pages:
 [View Documentation](https://r82-labs.github.io/r82labs-learn-with-physics/)
 
+## 📦 Releases
+
+Releases are automatically created on every merge to `main` using semantic versioning.
+
+### Commit Message Patterns
+
+The version bump is determined by commit messages:
+
+- **`BREAKING CHANGE:`** → Major version bump (e.g., v1.0.0 → v2.0.0)
+- **`feat:`** → Minor version bump (e.g., v1.0.0 → v1.1.0)  
+- Regular commits → Patch version bump (e.g., v1.0.0 → v1.0.1)
+
+### Skipping a Release
+
+To skip automatic release creation, include `[skip release]` in the commit message.
+
 ---
 *Created by r82-labs*

@@ -3,11 +3,13 @@ name: C++ CI/CD Pipeline
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v*'
   pull_request:
     branches: [ main ]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -59,6 +61,22 @@ jobs:
       with:
         path: 'docs/html'
 
+  version-and-release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !startsWith(github.event.head_commit.message, '[skip release]')
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Bump version and push tag
+      uses: anothernerd/ci-semver@0.5.1
+      with:
+        major-pattern: 'BREAKING CHANGE:'
+        minor-pattern: 'feat:'
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
   deploy-docs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build-and-test
@@ -70,3 +88,31 @@ jobs:
     - name: Deploy to GitHub Pages
       id: deployment
       uses: actions/deploy-pages@v4
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y doxygen lcov graphviz
+
+    - name: Configure CMake (Release)
+      run: |
+        cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: build/libr82labs_learn_with_physics.so
+        body: Release ${{ github.ref_name }}
+        draft: false
+        prerelease: false
+
+
