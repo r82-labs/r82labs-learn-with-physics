@@ -89,30 +89,4 @@ jobs:
       id: deployment
       uses: actions/deploy-pages@v4
 
-  release:
-    if: startsWith(github.ref, 'refs/tags/v')
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Install Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y doxygen lcov graphviz
-
-    - name: Configure CMake (Release)
-      run: |
-        cmake -B build -DCMAKE_BUILD_TYPE=Release
-
-    - name: Build
-      run: cmake --build build
-
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: build/libr82labs_learn_with_physics.so
-        body: Release ${{ github.ref_name }}
-        draft: false
-        prerelease: false
-
 
