@@ -46,6 +46,7 @@ jobs:
       with:
         files: coverage_filtered.info
         token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true
 
     - name: Generate Documentation
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
