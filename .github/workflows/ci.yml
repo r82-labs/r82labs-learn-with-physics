@@ -71,11 +71,11 @@ jobs:
         fetch-depth: 0
 
     - name: Bump version and push tag
-      uses: anothernerd/ci-semver@0.5.1
+      uses: mathieudutour/github-tag-action@v6
       with:
-        major-pattern: 'BREAKING CHANGE:'
-        minor-pattern: 'feat:'
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        default_bump: patch
+        custom_release_rules: "BREAKING CHANGE:major,feat:minor"
 
   deploy-docs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
