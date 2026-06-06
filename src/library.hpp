@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <numbers>
 #include <stdexcept>
 
 /**
@@ -56,7 +55,7 @@ namespace r82labs::learn_with_physics {
      * @brief Represents an object to be launched.
      */
     class Projectile {
-        float mass; ///< Mass of the projectile in kg
+        const float mass; ///< Mass of the projectile in kg
 
     public:
         /**
@@ -75,18 +74,6 @@ namespace r82labs::learn_with_physics {
          * @return float Mass in kg.
          */
         [[nodiscard]] float get_mass() const { return mass; }
-
-        /**
-         * @brief Sets a new mass for the projectile.
-         * @param m New mass in kg.
-         * @throws std::invalid_argument if m <= 0.
-         */
-        void set_mass(float m) {
-            if (m <= 0.0f) {
-                throw std::invalid_argument("mass must be positive");
-            }
-            mass = m;
-        }
     };
 
     /**
@@ -125,7 +112,7 @@ namespace r82labs::learn_with_physics {
      */
     class Simulator {
         const float gravity;            ///< Acceleration due to gravity (g)
-        Projectile projectile;          ///< The projectile being simulated
+        const Projectile projectile;    ///< The projectile being simulated
         float x_velocity_factor;        ///< Precomputed v0 * cos(theta)
         float y_velocity_factor;        ///< Precomputed v0 * sin(theta)
         float dir_multiplier;           ///< Direction multiplier for x
@@ -151,8 +138,8 @@ namespace r82labs::learn_with_physics {
          * @brief Calculates the position of a projectile at a specific time.
          * 
          * Using the precomputed launch state:
-         * \f[ x(t) = (v_0 \cos\theta) t \f]
-         * \f[ y(t) = (v_0 \sin\theta) t - \frac{1}{2} g t^2 \f]
+         * \f[ x(t) = (v_0\cos\theta) t \f]
+         * \f[ y(t) = (v_0\sin\theta) t - \frac{1}{2} g t^2 \f]
          * 
          * @param time Time elapsed since launch in seconds.
          * @return Point The (x, y) coordinates at time t.

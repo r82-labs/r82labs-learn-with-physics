@@ -29,17 +29,6 @@ TEST(ProjectileTest, RejectsInvalidMass) {
     EXPECT_NO_THROW(Projectile(0.1f));
 }
 
-TEST(ProjectileTest, SetMass) {
-    Projectile proj(1.0f);
-    EXPECT_FLOAT_EQ(proj.get_mass(), 1.0f);
-    
-    proj.set_mass(2.0f);
-    EXPECT_FLOAT_EQ(proj.get_mass(), 2.0f);
-    
-    EXPECT_THROW(proj.set_mass(0.0f), std::invalid_argument);
-    EXPECT_THROW(proj.set_mass(-0.5f), std::invalid_argument);
-}
-
 TEST(SimulatorTest, ExactPositionAtTime) {
     const Slingshot sling(100.0f, 1.0f);
     const Projectile proj(1.0f);
