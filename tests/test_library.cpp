@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "library.hpp"
-#include <cmath>
 #include <numbers>
 #include <stdexcept>
 
