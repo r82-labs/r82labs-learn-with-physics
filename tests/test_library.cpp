@@ -43,7 +43,7 @@ TEST(SimulatorTest, DegreesSupport) {
     const Slingshot sling(100.0f, 1.0f);
     const Projectile proj(1.0f);
     const Simulator sim_deg(sling, proj, 1.0f, 90.0f, AngleUnit::degrees);
-    const Simulator sim_rad(sling, proj, 1.0f, std::numbers::pi / 2.0f, AngleUnit::radians);
+    const Simulator sim_rad(sling, proj, 1.0f, std::numbers::pi_v<float> / 2.0f, AngleUnit::radians);
 
     auto pos_deg = sim_deg.get_position_at_time(1.0f);
     auto pos_rad = sim_rad.get_position_at_time(1.0f);
@@ -71,9 +71,11 @@ TEST(SimulatorTest, AngleValidation) {
     const Slingshot sling(100.0f, 1.0f);
     const Projectile proj(1.0f);
 
-    // Test bounds
+    // Test bounds (Explicitly checking 0 and 90 degrees)
     EXPECT_NO_THROW(Simulator(sling, proj, 1.0f, 0.0f, AngleUnit::degrees));
     EXPECT_NO_THROW(Simulator(sling, proj, 1.0f, 90.0f, AngleUnit::degrees));
+    EXPECT_NO_THROW(Simulator(sling, proj, 1.0f, 0.0f, AngleUnit::radians));
+    EXPECT_NO_THROW(Simulator(sling, proj, 1.0f, std::numbers::pi_v<float> / 2.0f, AngleUnit::radians));
 
     // Test out of range (Simulator should throw)
     EXPECT_THROW(Simulator(sling, proj, 1.0f, -0.1f, AngleUnit::degrees), std::out_of_range);
