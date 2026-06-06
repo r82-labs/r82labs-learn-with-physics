@@ -15,7 +15,7 @@ namespace r82labs::learn_with_physics {
                          const float draw_length, const float angle,
                          const AngleUnit unit, const LaunchDirection direction,
                          const float g)
-        : gravity(g), projectile(proj), x_velocity_factor(0.0f), y_velocity_factor(0.0f), dir_multiplier(1.0f) {
+        : gravity(g), projectile(proj), x_velocity_factor(0.0f), y_velocity_factor(0.0f), half_gravity_factor(0.5f * g) {
         const float angle_radians = MathUtils::to_radians(angle, unit);
 
         if (angle_radians < 0.0f || angle_radians > (std::numbers::pi_v<float> / 2.0f + 0.0001f)) {
@@ -23,15 +23,16 @@ namespace r82labs::learn_with_physics {
         }
 
         const float v0 = draw_length * std::sqrt((slingshot.get_efficiency() * slingshot.get_stiffness()) / projectile.get_mass());
+        const float dir_multiplier = (direction == LaunchDirection::right) ? 1.0f : -1.0f;
 
-        x_velocity_factor = v0 * std::cos(angle_radians);
+        x_velocity_factor = v0 * std::cos(angle_radians) * dir_multiplier;
         y_velocity_factor = v0 * std::sin(angle_radians);
-        dir_multiplier = (direction == LaunchDirection::right) ? 1.0f : -1.0f;
     }
 
     Point Simulator::get_position_at_time(const float time) const {
-        const float x = dir_multiplier * x_velocity_factor * time;
-        const float y = (y_velocity_factor * time) - (0.5f * gravity * time * time);
-        return {x, y};
+        return {
+            x_velocity_factor * time,
+            (y_velocity_factor - half_gravity_factor * time) * time
+        };
     }
 }

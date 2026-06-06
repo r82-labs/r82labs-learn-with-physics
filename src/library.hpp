@@ -113,9 +113,9 @@ namespace r82labs::learn_with_physics {
     class Simulator {
         const float gravity;            ///< Acceleration due to gravity (g)
         const Projectile projectile;    ///< The projectile being simulated
-        float x_velocity_factor;        ///< Precomputed v0 * cos(theta)
+        float x_velocity_factor;        ///< Precomputed v0 * cos(theta) * direction
         float y_velocity_factor;        ///< Precomputed v0 * sin(theta)
-        float dir_multiplier;           ///< Direction multiplier for x
+        float half_gravity_factor;      ///< Precomputed 0.5 * gravity
 
     public:
         /**
@@ -137,9 +137,9 @@ namespace r82labs::learn_with_physics {
         /**
          * @brief Calculates the position of a projectile at a specific time.
          * 
-         * Using the precomputed launch state:
-         * \f[ x(t) = (v_0\cos\theta) t \f]
-         * \f[ y(t) = (v_0\sin\theta) t - \frac{1}{2} g t^2 \f]
+         * Using the precomputed launch state and Horner's method for efficiency:
+         * \f[ x(t) = f_x \cdot t \f]
+         * \f[ y(t) = (f_y - \frac{1}{2} g \cdot t) \cdot t \f]
          * 
          * @param time Time elapsed since launch in seconds.
          * @return Point The (x, y) coordinates at time t.
