@@ -6,16 +6,10 @@
 
 using namespace r82labs::learn_with_physics;
 
-TEST(SlingshotTest, LaunchVelocityCalculations) {
-    const Slingshot sling(100.0f, 1.0f);
-
-    EXPECT_FLOAT_EQ(sling.get_launch_velocity(1.0f, 1.0f), 10.0f);
-
-    EXPECT_FLOAT_EQ(sling.get_launch_velocity(1.0f, 0.0f), 0.0f);
-
-    const Slingshot weak_sling(100.0f, 0.5f);
-
-    EXPECT_NEAR(weak_sling.get_launch_velocity(1.0f, 1.0f), 7.07106f, 0.0001f);
+TEST(SlingshotTest, PropertyAccessors) {
+    const Slingshot sling(100.0f, 0.8f);
+    EXPECT_FLOAT_EQ(sling.get_stiffness(), 100.0f);
+    EXPECT_FLOAT_EQ(sling.get_efficiency(), 0.8f);
 }
 
 TEST(SlingshotTest, RejectsNegativeStiffness) {
@@ -27,6 +21,23 @@ TEST(SlingshotTest, RejectsInvalidEfficiency) {
     EXPECT_THROW(Slingshot(100.0f, 1.1f), std::invalid_argument);
     EXPECT_NO_THROW(Slingshot(100.0f, 0.0f));
     EXPECT_NO_THROW(Slingshot(100.0f, 1.0f));
+}
+
+TEST(ProjectileTest, RejectsInvalidMass) {
+    EXPECT_THROW(Projectile(0.0f), std::invalid_argument);
+    EXPECT_THROW(Projectile(-1.0f), std::invalid_argument);
+    EXPECT_NO_THROW(Projectile(0.1f));
+}
+
+TEST(ProjectileTest, SetMass) {
+    Projectile proj(1.0f);
+    EXPECT_FLOAT_EQ(proj.get_mass(), 1.0f);
+    
+    proj.set_mass(2.0f);
+    EXPECT_FLOAT_EQ(proj.get_mass(), 2.0f);
+    
+    EXPECT_THROW(proj.set_mass(0.0f), std::invalid_argument);
+    EXPECT_THROW(proj.set_mass(-0.5f), std::invalid_argument);
 }
 
 TEST(SimulatorTest, ExactPositionAtTime) {
@@ -76,27 +87,32 @@ TEST(SimulatorTest, AngleValidation) {
     EXPECT_NO_THROW(Simulator(sling, proj, 1.0f, 0.0f, AngleUnit::degrees));
     EXPECT_NO_THROW(Simulator(sling, proj, 1.0f, 90.0f, AngleUnit::degrees));
 
-    // Test out of range
+    // Test out of range (Simulator should throw)
     EXPECT_THROW(Simulator(sling, proj, 1.0f, -0.1f, AngleUnit::degrees), std::out_of_range);
     EXPECT_THROW(Simulator(sling, proj, 1.0f, 90.1f, AngleUnit::degrees), std::out_of_range);
     EXPECT_THROW(Simulator(sling, proj, 1.0f, 150.0f, AngleUnit::degrees), std::out_of_range);
 }
 
-TEST(LibraryCoverageTest, AdditionalCoverage) {
-    // Cover default efficiency
-    const Slingshot default_sling(100.0f);
-    EXPECT_NEAR(default_sling.get_launch_velocity(1.0f, 1.0f), 8.66025f, 0.0001f); // sqrt(0.75 * 100)
+TEST(SimulatorTest, GetProjectile) {
+    const Slingshot sling(100.0f, 1.0f);
+    const Projectile proj(1.0f);
+    const Simulator sim(sling, proj, 1.0f, 0.0f, AngleUnit::radians);
+    
+    EXPECT_FLOAT_EQ(sim.get_projectile().get_mass(), 1.0f);
+}
 
-    // Cover MathUtils with Radians
+TEST(LibraryCoverageTest, AdditionalCoverage) {
+    // Cover MathUtils with Radians and larger ranges (pure conversion)
     EXPECT_FLOAT_EQ(MathUtils::to_radians(1.0f, AngleUnit::radians), 1.0f);
-    EXPECT_THROW(MathUtils::to_radians(-0.1f, AngleUnit::radians), std::out_of_range);
-    EXPECT_THROW(MathUtils::to_radians(2.0f, AngleUnit::radians), std::out_of_range);
+    EXPECT_FLOAT_EQ(MathUtils::to_radians(180.0f, AngleUnit::degrees), std::numbers::pi_v<float>);
+    EXPECT_FLOAT_EQ(MathUtils::to_radians(-90.0f, AngleUnit::degrees), -std::numbers::pi_v<float> / 2.0f);
 
     // Cover Projectile mass getter explicitly
     const Projectile p(5.0f);
     EXPECT_FLOAT_EQ(p.get_mass(), 5.0f);
 
     // Cover Simulator configured launch state
+    const Slingshot default_sling(100.0f);
     const Simulator default_sim(default_sling, p, 1.0f, 45.0f, AngleUnit::degrees);
     auto [x, y] = default_sim.get_position_at_time(0.1f);
     EXPECT_GT(x, 0.0f);

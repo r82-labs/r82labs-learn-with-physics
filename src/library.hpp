@@ -34,13 +34,12 @@ namespace r82labs::learn_with_physics {
     class MathUtils {
     public:
         /**
-         * @brief Converts an angle to radians and validates it is within [0, PI/2].
+         * @brief Converts an angle to radians.
          * @param angle The input angle value.
          * @param unit The unit of the input angle.
          * @return float The angle value in radians.
-         * @throws std::out_of_range if the angle is not between 0 and 90 degrees (inclusive).
          */
-        static float to_radians(float angle, AngleUnit unit);
+        [[nodiscard]] static float to_radians(float angle, AngleUnit unit);
     };
 
     /**
@@ -50,6 +49,44 @@ namespace r82labs::learn_with_physics {
     struct Point {
         float x; ///< The horizontal coordinate.
         float y; ///< The vertical coordinate.
+    };
+
+    /**
+     * @class Projectile
+     * @brief Represents an object to be launched.
+     */
+    class Projectile {
+        float mass; ///< Mass of the projectile in kg
+
+    public:
+        /**
+         * @brief Constructs a Projectile with a specific mass.
+         * @param m Mass in kilograms.
+         * @throws std::invalid_argument if m <= 0.
+         */
+        explicit Projectile(float m) : mass(m) {
+            if (m <= 0.0f) {
+                throw std::invalid_argument("mass must be positive");
+            }
+        }
+        
+        /**
+         * @brief Gets the mass of the projectile.
+         * @return float Mass in kg.
+         */
+        [[nodiscard]] float get_mass() const { return mass; }
+
+        /**
+         * @brief Sets a new mass for the projectile.
+         * @param m New mass in kg.
+         * @throws std::invalid_argument if m <= 0.
+         */
+        void set_mass(float m) {
+            if (m <= 0.0f) {
+                throw std::invalid_argument("mass must be positive");
+            }
+            mass = m;
+        }
     };
 
     /**
@@ -76,40 +113,10 @@ namespace r82labs::learn_with_physics {
             }
         }
 
-        /**
-         * @brief Calculates the launch velocity of a projectile.
-         * 
-         * The velocity is calculated using the formula:
-         * \f[ v = d \sqrt{\frac{\eta k}{m}} \f]
-         * where \f$ d \f$ is the draw length, \f$ \eta \f$ is efficiency,
-         * \f$ k \f$ is stiffness, and \f$ m \f$ is mass.
-         * 
-         * @param draw_length_meters Distance the band is pulled back.
-         * @param mass_kg Mass of the projectile being launched.
-         * @return float The resulting launch velocity in m/s.
-         */
-        float get_launch_velocity(float draw_length_meters, float mass_kg) const;
-    };
-
-    /**
-     * @class Projectile
-     * @brief Represents an object to be launched.
-     */
-    class Projectile {
-        const float mass; ///< Mass of the projectile in kg
-
-    public:
-        /**
-         * @brief Constructs a Projectile with a specific mass.
-         * @param m Mass in kilograms.
-         */
-        explicit Projectile(float m) : mass(m) {}
-        
-        /**
-         * @brief Gets the mass of the projectile.
-         * @return float Mass in kg.
-         */
-        float get_mass() const { return mass; }
+        /** @brief Gets the band stiffness in N/m. */
+        [[nodiscard]] float get_stiffness() const { return band_stiffness; }
+        /** @brief Gets the efficiency factor (0.0 to 1.0). */
+        [[nodiscard]] float get_efficiency() const { return efficiency; }
     };
 
     /**
@@ -118,6 +125,7 @@ namespace r82labs::learn_with_physics {
      */
     class Simulator {
         const float gravity;            ///< Acceleration due to gravity (g)
+        Projectile projectile;          ///< The projectile being simulated
         float x_velocity_factor;        ///< Precomputed v0 * cos(theta)
         float y_velocity_factor;        ///< Precomputed v0 * sin(theta)
         float dir_multiplier;           ///< Direction multiplier for x
@@ -149,6 +157,12 @@ namespace r82labs::learn_with_physics {
          * @param time Time elapsed since launch in seconds.
          * @return Point The (x, y) coordinates at time t.
          */
-        Point get_position_at_time(float time) const;
+        [[nodiscard]] Point get_position_at_time(float time) const;
+
+        /**
+         * @brief Provides access to the projectile being simulated.
+         * @return const Projectile& Reference to the internal projectile.
+         */
+        [[nodiscard]] const Projectile& get_projectile() const { return projectile; }
     };
 }
