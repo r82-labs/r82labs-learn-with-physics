@@ -67,7 +67,14 @@ namespace r82labs::learn_with_physics {
          * @param eff The efficiency factor (0.0 to 1.0).
          */
         explicit Slingshot(float k, float eff = 0.75f)
-            : band_stiffness(k), efficiency(eff) {}
+            : band_stiffness(k), efficiency(eff) {
+            if (k < 0.0f) {
+                throw std::invalid_argument("band_stiffness must be non-negative");
+            }
+            if (eff < 0.0f || eff > 1.0f) {
+                throw std::invalid_argument("efficiency must be between 0 and 1");
+            }
+        }
 
         /**
          * @brief Calculates the launch velocity of a projectile.
@@ -110,35 +117,38 @@ namespace r82labs::learn_with_physics {
      * @brief Handles trajectory calculations for projectiles.
      */
     class Simulator {
-        const float gravity; ///< Acceleration due to gravity (g)
+        const float gravity;            ///< Acceleration due to gravity (g)
+        float x_velocity_factor;        ///< Precomputed v0 * cos(theta)
+        float y_velocity_factor;        ///< Precomputed v0 * sin(theta)
+        float dir_multiplier;           ///< Direction multiplier for x
 
     public:
         /**
-         * @brief Constructs a Simulator with a specific gravity constant.
+         * @brief Constructs a Simulator for a configured launch.
+         * @param slingshot The Slingshot used for launch.
+         * @param proj The Projectile being launched.
+         * @param draw_length The draw length in meters.
+         * @param angle The launch angle.
+         * @param unit The unit of the provided angle (defaults to radians).
+         * @param direction The launch direction (defaults to right).
          * @param g Gravity in \f$ m/s^2 \f$ (defaults to 9.81).
          */
-        explicit Simulator(float g = 9.81f) : gravity(g) {}
+        Simulator(const Slingshot& slingshot, const Projectile& proj,
+                  float draw_length, float angle,
+                  AngleUnit unit = AngleUnit::radians,
+                  LaunchDirection direction = LaunchDirection::right,
+                  float g = 9.81f);
 
         /**
          * @brief Calculates the position of a projectile at a specific time.
          * 
-         * Using standard projectile motion equations:
-         * \f[ x(t) = v_0 \cos(\theta) t \f]
-         * \f[ y(t) = v_0 \sin(\theta) t - \frac{1}{2} g t^2 \f]
+         * Using the precomputed launch state:
+         * \f[ x(t) = (v_0 \cos\theta) t \f]
+         * \f[ y(t) = (v_0 \sin\theta) t - \frac{1}{2} g t^2 \f]
          * 
-         * @param slingshot The Slingshot used for launch.
-         * @param proj The Projectile being simulated.
-         * @param draw_length The draw length in meters.
-         * @param angle The launch angle.
          * @param time Time elapsed since launch in seconds.
-         * @param unit The unit of the provided angle (defaults to radians).
-         * @param direction The launch direction (defaults to right).
          * @return Point The (x, y) coordinates at time t.
-         * @throws std::out_of_range if the angle is invalid.
          */
-        Point get_position_at_time(const Slingshot& slingshot, const Projectile& proj,
-                                  float draw_length, float angle, float time, 
-                                  AngleUnit unit = AngleUnit::radians,
-                                  LaunchDirection direction = LaunchDirection::right) const;
+        Point get_position_at_time(float time) const;
     };
 }

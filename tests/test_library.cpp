@@ -18,25 +18,36 @@ TEST(SlingshotTest, LaunchVelocityCalculations) {
     EXPECT_NEAR(weak_sling.get_launch_velocity(1.0f, 1.0f), 7.07106f, 0.0001f);
 }
 
+TEST(SlingshotTest, RejectsNegativeStiffness) {
+    EXPECT_THROW(Slingshot(-10.0f), std::invalid_argument);
+}
+
+TEST(SlingshotTest, RejectsInvalidEfficiency) {
+    EXPECT_THROW(Slingshot(100.0f, -0.1f), std::invalid_argument);
+    EXPECT_THROW(Slingshot(100.0f, 1.1f), std::invalid_argument);
+    EXPECT_NO_THROW(Slingshot(100.0f, 0.0f));
+    EXPECT_NO_THROW(Slingshot(100.0f, 1.0f));
+}
+
 TEST(SimulatorTest, ExactPositionAtTime) {
     const Slingshot sling(100.0f, 1.0f);
     const Projectile proj(1.0f);
-    const Simulator sim(10.0f);
+    const Simulator sim(sling, proj, 1.0f, 0.0f, AngleUnit::radians, LaunchDirection::right, 10.0f);
 
-    auto [x, y] = sim.get_position_at_time(sling, proj, 1.0f, 0.0f, 1.0f);
+    auto [x, y] = sim.get_position_at_time(1.0f);
 
     EXPECT_FLOAT_EQ(x, 10.0f);
-
     EXPECT_FLOAT_EQ(y, -5.0f);
 }
 
 TEST(SimulatorTest, DegreesSupport) {
     const Slingshot sling(100.0f, 1.0f);
     const Projectile proj(1.0f);
-    const Simulator sim(10.0f);
+    const Simulator sim_deg(sling, proj, 1.0f, 90.0f, AngleUnit::degrees);
+    const Simulator sim_rad(sling, proj, 1.0f, std::numbers::pi / 2.0f, AngleUnit::radians);
 
-    auto pos_deg = sim.get_position_at_time(sling, proj, 1.0f, 90.0f, 1.0f, AngleUnit::degrees);
-    auto pos_rad = sim.get_position_at_time(sling, proj, 1.0f, std::numbers::pi / 2.0f, 1.0f, AngleUnit::radians);
+    auto pos_deg = sim_deg.get_position_at_time(1.0f);
+    auto pos_rad = sim_rad.get_position_at_time(1.0f);
 
     EXPECT_NEAR(pos_deg.x, pos_rad.x, 0.0001f);
     EXPECT_NEAR(pos_deg.y, pos_rad.y, 0.0001f);
@@ -46,10 +57,11 @@ TEST(SimulatorTest, DegreesSupport) {
 TEST(SimulatorTest, DirectionSupport) {
     const Slingshot sling(100.0f, 1.0f);
     const Projectile proj(1.0f);
-    const Simulator sim(10.0f);
+    const Simulator sim_right(sling, proj, 1.0f, 0.0f, AngleUnit::degrees, LaunchDirection::right);
+    const Simulator sim_left(sling, proj, 1.0f, 0.0f, AngleUnit::degrees, LaunchDirection::left);
 
-    auto pos_right = sim.get_position_at_time(sling, proj, 1.0f, 0.0f, 1.0f, AngleUnit::degrees, LaunchDirection::right);
-    auto pos_left = sim.get_position_at_time(sling, proj, 1.0f, 0.0f, 1.0f, AngleUnit::degrees, LaunchDirection::left);
+    auto pos_right = sim_right.get_position_at_time(1.0f);
+    auto pos_left = sim_left.get_position_at_time(1.0f);
 
     EXPECT_FLOAT_EQ(pos_right.x, 10.0f);
     EXPECT_FLOAT_EQ(pos_left.x, -10.0f);
@@ -59,16 +71,15 @@ TEST(SimulatorTest, DirectionSupport) {
 TEST(SimulatorTest, AngleValidation) {
     const Slingshot sling(100.0f, 1.0f);
     const Projectile proj(1.0f);
-    const Simulator sim(10.0f);
 
     // Test bounds
-    EXPECT_NO_THROW(sim.get_position_at_time(sling, proj, 1.0f, 0.0f, 1.0f, AngleUnit::degrees));
-    EXPECT_NO_THROW(sim.get_position_at_time(sling, proj, 1.0f, 90.0f, 1.0f, AngleUnit::degrees));
+    EXPECT_NO_THROW(Simulator(sling, proj, 1.0f, 0.0f, AngleUnit::degrees));
+    EXPECT_NO_THROW(Simulator(sling, proj, 1.0f, 90.0f, AngleUnit::degrees));
 
     // Test out of range
-    EXPECT_THROW(sim.get_position_at_time(sling, proj, 1.0f, -0.1f, 1.0f, AngleUnit::degrees), std::out_of_range);
-    EXPECT_THROW(sim.get_position_at_time(sling, proj, 1.0f, 90.1f, 1.0f, AngleUnit::degrees), std::out_of_range);
-    EXPECT_THROW(sim.get_position_at_time(sling, proj, 1.0f, 150.0f, 1.0f, AngleUnit::degrees), std::out_of_range);
+    EXPECT_THROW(Simulator(sling, proj, 1.0f, -0.1f, AngleUnit::degrees), std::out_of_range);
+    EXPECT_THROW(Simulator(sling, proj, 1.0f, 90.1f, AngleUnit::degrees), std::out_of_range);
+    EXPECT_THROW(Simulator(sling, proj, 1.0f, 150.0f, AngleUnit::degrees), std::out_of_range);
 }
 
 TEST(LibraryCoverageTest, AdditionalCoverage) {
@@ -85,8 +96,8 @@ TEST(LibraryCoverageTest, AdditionalCoverage) {
     const Projectile p(5.0f);
     EXPECT_FLOAT_EQ(p.get_mass(), 5.0f);
 
-    // Cover Simulator default constructor
-    const Simulator default_sim;
-    auto [x, y] = default_sim.get_position_at_time(default_sling, p, 1.0f, 45.0f, 0.1f, AngleUnit::degrees);
+    // Cover Simulator configured launch state
+    const Simulator default_sim(default_sling, p, 1.0f, 45.0f, AngleUnit::degrees);
+    auto [x, y] = default_sim.get_position_at_time(0.1f);
     EXPECT_GT(x, 0.0f);
 }
