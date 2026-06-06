@@ -19,8 +19,7 @@ namespace r82labs::learn_with_physics {
         : gravity(g), projectile(proj), x_velocity_factor(0.0f), y_velocity_factor(0.0f), half_gravity_factor(0.5f * g) {
         const float angle_radians = MathUtils::to_radians(angle, unit);
 
-        // Use standard epsilon to handle floating point imprecision at the boundaries (0 and PI/2)
-        const float epsilon = std::numeric_limits<float>::epsilon();
+        constexpr float epsilon = std::numeric_limits<float>::epsilon();
         if (angle_radians < -epsilon || angle_radians > (std::numbers::pi_v<float> / 2.0f + epsilon)) {
             throw std::out_of_range("Launch angle must be between 0 and 90 degrees.");
         }
