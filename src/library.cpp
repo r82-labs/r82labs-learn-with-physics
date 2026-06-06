@@ -1,5 +1,6 @@
 #include "library.hpp"
 #include <cmath>
+#include <numbers>
 
 namespace r82labs::learn_with_physics {
 
