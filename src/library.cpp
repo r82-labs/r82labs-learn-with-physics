@@ -37,24 +37,4 @@ namespace r82labs::learn_with_physics {
         
         return {x, y};
     }
-
-    std::vector<Point> Simulator::calculate_full_trajectory(const Slingshot& slingshot, const Projectile& proj,
-                                                          const float draw_length, const float angle, const float time_step,
-                                                          const AngleUnit unit, const LaunchDirection direction) const {
-        std::vector<Point> trajectory;
-        float time = 0.0f;
-        Point current_pos{};
-
-        do {
-            current_pos = get_position_at_time(slingshot, proj, draw_length, angle, time, unit, direction);
-
-            if (current_pos.y >= -0.001f) {
-                trajectory.push_back(current_pos);
-            }
-            time += time_step;
-
-        } while (current_pos.y >= 0.0f);
-
-        return trajectory;
-    }
 }

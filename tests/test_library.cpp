@@ -71,25 +71,6 @@ TEST(SimulatorTest, AngleValidation) {
     EXPECT_THROW(sim.get_position_at_time(sling, proj, 1.0f, 150.0f, 1.0f, AngleUnit::degrees), std::out_of_range);
 }
 
-TEST(SimulatorTest, FullTrajectoryBounds) {
-    const Slingshot sling(100.0f, 1.0f);
-    const Projectile proj(1.0f);
-    const Simulator sim(10.0f);
-
-    const auto trajectory = sim.calculate_full_trajectory(sling, proj, 1.0f, 45.0f, 0.1f, AngleUnit::degrees, LaunchDirection::left);
-
-    ASSERT_FALSE(trajectory.empty());
-
-    EXPECT_FLOAT_EQ(trajectory.front().x, 0.0f);
-    EXPECT_FLOAT_EQ(trajectory.front().y, 0.0f);
-
-   EXPECT_GE(trajectory.back().y, -0.001f);
-
-   for (size_t i = 1; i < trajectory.size(); ++i) {
-        EXPECT_LE(trajectory[i].x, 0.0f);
-    }
-}
-
 TEST(LibraryCoverageTest, AdditionalCoverage) {
     // Cover default efficiency
     const Slingshot default_sling(100.0f);

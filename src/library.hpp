@@ -140,22 +140,5 @@ namespace r82labs::learn_with_physics {
                                   float draw_length, float angle, float time, 
                                   AngleUnit unit = AngleUnit::radians,
                                   LaunchDirection direction = LaunchDirection::right) const;
-
-        /**
-         * @brief Calculates the full flight trajectory until the projectile hits the ground.
-         * @param slingshot The Slingshot used for launch.
-         * @param proj The Projectile being simulated.
-         * @param draw_length The draw length in meters.
-         * @param angle The launch angle.
-         * @param time_step Time interval between trajectory points.
-         * @param unit The unit of the provided angle (defaults to radians).
-         * @param direction The launch direction (defaults to right).
-         * @return std::vector<Point> A sequence of points representing the flight path.
-         * @throws std::out_of_range if the angle is invalid.
-         */
-        std::vector<Point> calculate_full_trajectory(const Slingshot& slingshot, const Projectile& proj,
-                                                     float draw_length, float angle, float time_step,
-                                                     AngleUnit unit = AngleUnit::radians,
-                                                     LaunchDirection direction = LaunchDirection::right) const;
     };
 }
