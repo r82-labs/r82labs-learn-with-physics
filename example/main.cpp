@@ -15,7 +15,7 @@ int main() {
                    .direction = LaunchDirection::right});
 
     const Point position = sim.get_position_at_time({.time = Time::from_seconds(0.5f)});
-    std::cout << "Position at t=0.5s: (" << position.x.as_meters() << ", " << position.y.as_meters() << ")\n";
+    std::cout << "Position at t=0.5s: (" << position.x << ", " << position.y << ")\n";
 
     return 0;
 }

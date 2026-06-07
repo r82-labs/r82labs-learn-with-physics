@@ -15,11 +15,17 @@ struct Mass {
     float value;
     MassUnit unit;
 
-    static Mass from_kilograms(float kilograms) { return Mass{kilograms, MassUnit::kilograms}; }
+    explicit Mass(float mass, MassUnit unit) : value(mass), unit(unit) {
+        if (mass <= 0.0f) {
+            throw std::invalid_argument("mass must be positive");
+        }
+    }
 
-    static Mass from_grams(float grams) { return Mass{grams, MassUnit::grams}; }
+    static Mass from_kilograms(float kilograms) { return Mass(kilograms, MassUnit::kilograms); }
 
-    static Mass from_pounds(float pounds) { return Mass{pounds, MassUnit::pounds}; }
+    static Mass from_grams(float grams) { return Mass(grams, MassUnit::grams); }
+
+    static Mass from_pounds(float pounds) { return Mass(pounds, MassUnit::pounds); }
 
     [[nodiscard]] float as_kilograms() const {
         switch (unit) {
@@ -38,7 +44,13 @@ struct Length {
     float value;
     LengthUnit unit;
 
-    static Length from_meters(float meters) { return Length{meters, LengthUnit::meters}; }
+    explicit Length(float length, LengthUnit unit) : value(length), unit(unit) {
+        if (length <= 0.0f) {
+            throw std::invalid_argument("length must be positive");
+        }
+    }
+
+    static Length from_meters(float meters) { return Length(meters, LengthUnit::meters); }
 
     static Length from_centimeters(float centimeters) {
         return Length{centimeters, LengthUnit::centimeters};
@@ -73,15 +85,21 @@ struct Time {
     float value;
     TimeUnit unit;
 
-    static Time from_seconds(float seconds) { return Time{seconds, TimeUnit::seconds}; }
-
-    static Time from_milliseconds(float milliseconds) {
-        return Time{milliseconds, TimeUnit::milliseconds};
+    explicit Time(float t, TimeUnit unit) : value(t), unit(unit) {
+        if (t < 0.0f) {
+            throw std::invalid_argument("time cannot be negative");
+        }
     }
 
-    static Time from_minutes(float minutes) { return Time{minutes, TimeUnit::minutes}; }
+    static Time from_seconds(float seconds) { return Time(seconds, TimeUnit::seconds); }
 
-    static Time from_hours(float hours) { return Time{hours, TimeUnit::hours}; }
+    static Time from_milliseconds(float milliseconds) {
+        return Time(milliseconds, TimeUnit::milliseconds);
+    }
+
+    static Time from_minutes(float minutes) { return Time(minutes, TimeUnit::minutes); }
+
+    static Time from_hours(float hours) { return Time(hours, TimeUnit::hours); }
 
     [[nodiscard]] float as_seconds() const {
         switch (unit) {
@@ -185,8 +203,8 @@ struct Efficiency {
 };
 
 struct Point {
-    Length x;
-    Length y;
+    float x;
+    float y;
 };
 
 struct PointInTime {

@@ -6,7 +6,7 @@
 namespace r82labs::learn_with_physics {
 
 struct ProjectileConfig {
-    Mass mass = Mass::from_kilograms(0.0f);
+    Mass mass = Mass::from_kilograms(1.0f);
 };
 
 class Projectile {

@@ -21,3 +21,14 @@ TEST(ProjectileTest, AcceptsDifferentMassUnits) {
     EXPECT_FLOAT_EQ(g_projectile.get_mass().as_kilograms(), 1.0f);
     EXPECT_NEAR(lb_projectile.get_mass().as_kilograms(), 1.0f, 1e-6f);
 }
+
+TEST(CoreTypesTest, RejectsInvalidLength) {
+    EXPECT_THROW(Length::from_meters(0.0f), std::invalid_argument);
+    EXPECT_THROW(Length::from_centimeters(-1.0f), std::invalid_argument);
+    EXPECT_NO_THROW(Length::from_inches(0.1f));
+}
+
+TEST(CoreTypesTest, RejectsNegativeTime) {
+    EXPECT_THROW(Time::from_seconds(-0.1f), std::invalid_argument);
+    EXPECT_NO_THROW(Time::from_seconds(0.0f));
+}
