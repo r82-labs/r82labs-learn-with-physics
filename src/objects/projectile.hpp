@@ -6,7 +6,7 @@
 namespace r82labs::learn_with_physics {
 
 struct ProjectileConfig {
-    Mass mass = Mass::from_kilograms(1.0f);
+    Mass mass = Mass::from_kilograms(1.0);
 };
 
 class Projectile {
@@ -14,7 +14,7 @@ class Projectile {
 
    public:
     explicit Projectile(const ProjectileConfig& config) : mass(config.mass) {
-        if (mass.as_kilograms() <= 0.0f) {
+        if (mass.get_kilograms() <= 0.0) {
             throw std::invalid_argument("mass must be positive");
         }
     }

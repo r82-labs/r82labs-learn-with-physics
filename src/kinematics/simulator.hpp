@@ -8,18 +8,18 @@ namespace r82labs::learn_with_physics {
 struct SimulatorConfig {
     const Slingshot& slingshot;
     const Projectile& projectile;
-    Length draw_length = Length::from_meters(1.0f);
-    LaunchOrientation orientation = LaunchOrientation::toward_right(Angle::from_degrees(45.0f));
+    Length draw_length = Length::from_meters(1.0);
+    LaunchOrientation orientation = LaunchOrientation::toward_right(Angle::from_degrees(45.0));
 
-    Acceleration g = Acceleration::from_meters_per_second_squared(9.81f);
+    Acceleration g = Acceleration::from_meters_per_second_squared(9.81);
 };
 
 class Simulator {
-    const float gravity;
+    const double gravity;
     const Projectile projectile;
-    float x_velocity_factor;
-    float y_velocity_factor;
-    float half_gravity_factor;
+    double x_velocity_factor;
+    double y_velocity_factor;
+    double half_gravity_factor;
 
    public:
     explicit Simulator(const SimulatorConfig& config);

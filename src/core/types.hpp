@@ -7,135 +7,79 @@ namespace r82labs::learn_with_physics {
 
 enum class LaunchDirection { right, left };
 
-enum class MassUnit { kilograms, grams, pounds };
-enum class LengthUnit { meters, centimeters, millimeters, inches, feet };
-enum class TimeUnit { seconds, milliseconds, minutes, hours };
-
-enum class StiffnessUnit {
-    newtons_per_meter,
-    kilonewtons_per_meter,
-    pounds_force_per_inch,
-    pounds_force_per_foot
-};
-
 struct Mass {
-    float value;
-    MassUnit unit;
+    double kilograms;
 
-    explicit Mass(float mass, MassUnit unit) : value(mass), unit(unit) {
-        if (mass <= 0.0f) {
+    explicit Mass(double kilograms) : kilograms(kilograms) {
+        if (kilograms <= 0.0) {
             throw std::invalid_argument("mass must be positive");
         }
     }
 
-    static Mass from_kilograms(float kilograms) { return Mass(kilograms, MassUnit::kilograms); }
+    static Mass from_kilograms(double kilograms) { return Mass(kilograms); }
 
-    static Mass from_grams(float grams) { return Mass(grams, MassUnit::grams); }
+    static Mass from_grams(double grams) { return Mass(grams / 1000.0); }
 
-    static Mass from_pounds(float pounds) { return Mass(pounds, MassUnit::pounds); }
+    static Mass from_pounds(double pounds) { return Mass(pounds * 0.45359237); }
 
-    [[nodiscard]] float as_kilograms() const {
-        switch (unit) {
-            case MassUnit::kilograms:
-                return value;
-            case MassUnit::grams:
-                return value / 1000.0f;
-            case MassUnit::pounds:
-                return value * 0.45359237f;
-        }
-        return value;
-    }
+    [[nodiscard]] double get_kilograms() const { return kilograms; }
 };
 
 struct Length {
-    float value;
-    LengthUnit unit;
+    double meters;
 
-    explicit Length(float length, LengthUnit unit) : value(length), unit(unit) {
-        if (length <= 0.0f) {
+    explicit Length(double meters) : meters(meters) {
+        if (meters <= 0.0) {
             throw std::invalid_argument("length must be positive");
         }
     }
 
-    static Length from_meters(float meters) { return Length(meters, LengthUnit::meters); }
+    static Length from_meters(double meters) { return Length(meters); }
 
-    static Length from_centimeters(float centimeters) {
-        return Length{centimeters, LengthUnit::centimeters};
-    }
+    static Length from_centimeters(double centimeters) { return Length{centimeters / 100.0}; }
 
-    static Length from_millimeters(float millimeters) {
-        return Length{millimeters, LengthUnit::millimeters};
-    }
+    static Length from_millimeters(double millimeters) { return Length{millimeters / 1000.0}; }
 
-    static Length from_inches(float inches) { return Length{inches, LengthUnit::inches}; }
+    static Length from_inches(double inches) { return Length{inches * 0.0254}; }
 
-    static Length from_feet(float feet) { return Length{feet, LengthUnit::feet}; }
+    static Length from_feet(double feet) { return Length{feet * 0.3048}; }
 
-    [[nodiscard]] float as_meters() const {
-        switch (unit) {
-            case LengthUnit::meters:
-                return value;
-            case LengthUnit::centimeters:
-                return value / 100.0f;
-            case LengthUnit::millimeters:
-                return value / 1000.0f;
-            case LengthUnit::inches:
-                return value * 0.0254f;
-            case LengthUnit::feet:
-                return value * 0.3048f;
-        }
-        return value;
-    }
+    [[nodiscard]] double get_meters() const { return meters; }
 };
 
 struct Time {
-    float value;
-    TimeUnit unit;
+    double seconds;
 
-    explicit Time(float t, TimeUnit unit) : value(t), unit(unit) {
-        if (t < 0.0f) {
+    explicit Time(double seconds) : seconds(seconds) {
+        if (seconds < 0.0) {
             throw std::invalid_argument("time cannot be negative");
         }
     }
 
-    static Time from_seconds(float seconds) { return Time(seconds, TimeUnit::seconds); }
+    static Time from_seconds(double seconds) { return Time(seconds); }
 
-    static Time from_milliseconds(float milliseconds) {
-        return Time(milliseconds, TimeUnit::milliseconds);
-    }
+    static Time from_milliseconds(double milliseconds) { return Time(milliseconds / 1000.0); }
 
-    static Time from_minutes(float minutes) { return Time(minutes, TimeUnit::minutes); }
+    static Time from_minutes(double minutes) { return Time(minutes * 60.0); }
 
-    static Time from_hours(float hours) { return Time(hours, TimeUnit::hours); }
+    static Time from_hours(double hours) { return Time(hours * 3600.0); }
 
-    [[nodiscard]] float as_seconds() const {
-        switch (unit) {
-            case TimeUnit::seconds:
-                return value;
-            case TimeUnit::milliseconds:
-                return value / 1000.0f;
-            case TimeUnit::minutes:
-                return value * 60.0f;
-            case TimeUnit::hours:
-                return value * 3600.0f;
-        }
-        return value;
-    }
+    [[nodiscard]] double get_seconds() const { return seconds; }
 };
 
 struct Angle {
-    float value;
+    double radians;
 
-    static Angle from_degrees(float degrees) {
-        if (degrees < -1e-4f || degrees > 90.0f + 1e-4f) {
+    explicit Angle(double radians) : radians(radians) {}
+
+    static Angle from_degrees(double degrees) {
+        if (degrees < -1e-4 || degrees > 90.0 + 1e-4) {
             throw std::out_of_range("angle must be between 0 and 90 degrees");
         }
-        return Angle{degrees};
+        return Angle{degrees * (std::numbers::pi / 180.0)};
     }
 
-    [[nodiscard]] float as_radians() const { return value * (std::numbers::pi / 180.0f); }
-
-    [[nodiscard]] float as_degrees() const { return value; }
+    [[nodiscard]] double get_radians() const { return radians; }
 };
 
 struct LaunchOrientation {
@@ -145,94 +89,56 @@ struct LaunchOrientation {
     static LaunchOrientation toward_right(Angle a) { return {a, LaunchDirection::right}; }
     static LaunchOrientation toward_left(Angle a) { return {a, LaunchDirection::left}; }
 
-    [[nodiscard]] float as_radians() const {
-        if (direction == LaunchDirection::left) return std::numbers::pi - angle.as_radians();
-        return angle.as_radians();
+    [[nodiscard]] double get_radians() const {
+        if (direction == LaunchDirection::left) return std::numbers::pi - angle.get_radians();
+        return angle.get_radians();
     }
 };
 
-enum class AccelerationUnit { meters_per_second_squared };
-
 struct Acceleration {
-    float value;
-    AccelerationUnit unit;
+    double meters_per_second_squared;
 
-    static Acceleration from_meters_per_second_squared(float mpss) {
-        return Acceleration{mpss, AccelerationUnit::meters_per_second_squared};
-    }
+    static Acceleration from_meters_per_second_squared(double mpss) { return Acceleration{mpss}; }
 
-    [[nodiscard]] float as_meters_per_second_squared() const {
-        switch (unit) {
-            case AccelerationUnit::meters_per_second_squared:
-                return value;
-        }
-        return value;
-    }
+    [[nodiscard]] double get_meters_per_second_squared() const { return meters_per_second_squared; }
 };
 
 struct Stiffness {
-    float value;
-    StiffnessUnit unit;
+    double newtons_per_meter;
 
-    static Stiffness from_newtons_per_meter(float stiffness) {
-        return Stiffness{stiffness, StiffnessUnit::newtons_per_meter};
+    static Stiffness from_newtons_per_meter(double stiffness) { return Stiffness{stiffness}; }
+
+    static Stiffness from_kilonewtons_per_meter(double stiffness) {
+        return Stiffness{stiffness * 1000.0};
     }
 
-    static Stiffness from_kilonewtons_per_meter(float stiffness) {
-        return Stiffness{stiffness, StiffnessUnit::kilonewtons_per_meter};
+    static Stiffness from_pounds_force_per_inch(double stiffness) {
+        return Stiffness{stiffness * 175.126771};
     }
 
-    static Stiffness from_pounds_force_per_inch(float stiffness) {
-        return Stiffness{stiffness, StiffnessUnit::pounds_force_per_inch};
+    static Stiffness from_pounds_force_per_foot(double stiffness) {
+        return Stiffness{stiffness * 14.593903};
     }
 
-    static Stiffness from_pounds_force_per_foot(float stiffness) {
-        return Stiffness{stiffness, StiffnessUnit::pounds_force_per_foot};
-    }
-
-    [[nodiscard]] float as_newtons_per_meter() const {
-        switch (unit) {
-            case StiffnessUnit::newtons_per_meter:
-                return value;
-            case StiffnessUnit::kilonewtons_per_meter:
-                return value * 1000.0f;
-            case StiffnessUnit::pounds_force_per_inch:
-                return value * 175.126771f;
-            case StiffnessUnit::pounds_force_per_foot:
-                return value * 14.593903f;
-        }
-        return value;
-    }
-
-    [[nodiscard]] float as_kilonewtons_per_meter() const {
-        return as_newtons_per_meter() / 1000.0f;
-    }
-
-    [[nodiscard]] float as_pounds_force_per_inch() const {
-        return as_newtons_per_meter() / 175.126771f;
-    }
-
-    [[nodiscard]] float as_pounds_force_per_foot() const {
-        return as_newtons_per_meter() / 14.593903f;
-    }
+    [[nodiscard]] double get_newtons_per_meter() const { return newtons_per_meter; }
 };
 
 struct Efficiency {
-    float value;
+    double ratio;
 
-    static Efficiency from_ratio(float ratio) {
-        if (ratio < 0.0f || ratio > 1.0f) {
+    static Efficiency from_ratio(double ratio) {
+        if (ratio < 0.0 || ratio > 1.0) {
             throw std::invalid_argument("efficiency ratio must be between 0 and 1");
         }
         return Efficiency{ratio};
     }
 
-    [[nodiscard]] float as_ratio() const { return value; }
+    [[nodiscard]] double get_ratio() const { return ratio; }
 };
 
 struct Point {
-    float x;
-    float y;
+    double x;
+    double y;
 };
 
 struct PointInTime {
@@ -241,7 +147,7 @@ struct PointInTime {
 };
 
 struct TimeRequest {
-    Time time = Time::from_seconds(0.0f);
+    Time time = Time::from_seconds(0.0);
 };
 
 }  // namespace r82labs::learn_with_physics
