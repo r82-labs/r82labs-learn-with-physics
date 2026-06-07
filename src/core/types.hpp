@@ -137,6 +137,67 @@ struct Angle {
     }
 };
 
+enum class StiffnessUnit { newtons_per_meter, kilonewtons_per_meter, pounds_force_per_inch, pounds_force_per_foot };
+
+struct Stiffness {
+    float value;
+    StiffnessUnit unit;
+
+    static Stiffness from_newtons_per_meter(float stiffness) {
+        return Stiffness{stiffness, StiffnessUnit::newtons_per_meter};
+    }
+
+    static Stiffness from_kilonewtons_per_meter(float stiffness) {
+        return Stiffness{stiffness, StiffnessUnit::kilonewtons_per_meter};
+    }
+
+    static Stiffness from_pounds_force_per_inch(float stiffness) {
+        return Stiffness{stiffness, StiffnessUnit::pounds_force_per_inch};
+    }
+
+    static Stiffness from_pounds_force_per_foot(float stiffness) {
+        return Stiffness{stiffness, StiffnessUnit::pounds_force_per_foot};
+    }
+
+    [[nodiscard]] float as_newtons_per_meter() const {
+        switch (unit) {
+            case StiffnessUnit::newtons_per_meter:
+                return value;
+            case StiffnessUnit::kilonewtons_per_meter:
+                return value * 1000.0f;
+            case StiffnessUnit::pounds_force_per_inch:
+                return value * 175.126771f;
+            case StiffnessUnit::pounds_force_per_foot:
+                return value * 14.593903f;
+        }
+        return value;
+    }
+
+    [[nodiscard]] float as_kilonewtons_per_meter() const {
+        return as_newtons_per_meter() / 1000.0f;
+    }
+
+    [[nodiscard]] float as_pounds_force_per_inch() const {
+        return as_newtons_per_meter() / 175.126771f;
+    }
+
+    [[nodiscard]] float as_pounds_force_per_foot() const {
+        return as_newtons_per_meter() / 14.593903f;
+    }
+};
+
+struct Efficiency {
+    float value;
+
+    static Efficiency from_ratio(float ratio) {
+        return Efficiency{ratio};
+    }
+
+    [[nodiscard]] float as_ratio() const {
+        return value;
+    }
+};
+
 struct Point {
     float x;
     float y;

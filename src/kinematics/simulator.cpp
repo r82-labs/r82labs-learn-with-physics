@@ -21,10 +21,11 @@ Simulator::Simulator(const SimulatorConfig& config)
 
     const float draw_length_m = config.draw_length.as_meters();
     const float mass_kg = projectile.get_mass().as_kilograms();
+    const float efficiency_ratio = config.slingshot.get_efficiency().as_ratio();
+    const float stiffness_npm = config.slingshot.get_stiffness().as_newtons_per_meter();
     const float v0 =
         draw_length_m *
-        std::sqrt((config.slingshot.get_efficiency() * config.slingshot.get_stiffness()) /
-                  mass_kg);
+        std::sqrt((efficiency_ratio * stiffness_npm) / mass_kg);
     const float dir_multiplier = (config.direction == LaunchDirection::right) ? 1.0f : -1.0f;
 
     x_velocity_factor = v0 * std::cos(angle_radians) * dir_multiplier;
