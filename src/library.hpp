@@ -1,6 +1,5 @@
 #pragma once
 #include <stdexcept>
-#include <vector>
 
 /**
  * @namespace r82labs::learn_with_physics
