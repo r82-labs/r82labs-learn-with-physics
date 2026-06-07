@@ -32,8 +32,8 @@ Simulator::Simulator(const SimulatorConfig& config)
 
 Point Simulator::get_position_at_time(const TimeRequest& request) const {
     const float time_seconds = request.time.as_seconds();
-    return {x_velocity_factor * time_seconds,
-            (y_velocity_factor - half_gravity_factor * time_seconds) * time_seconds};
+    return {Length::from_meters(x_velocity_factor * time_seconds),
+            Length::from_meters((y_velocity_factor - half_gravity_factor * time_seconds) * time_seconds)};
 }
 
 PointInTime Simulator::get_apex_point_in_time() const {

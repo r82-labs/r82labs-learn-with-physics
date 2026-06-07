@@ -20,8 +20,8 @@ TEST(SimulatorTest, ExactPositionAtTime) {
 
     auto [x, y] = sim.get_position_at_time({.time = Time::from_seconds(1.0f)});
 
-    EXPECT_FLOAT_EQ(x, 10.0f);
-    EXPECT_FLOAT_EQ(y, -5.0f);
+    EXPECT_FLOAT_EQ(x.as_meters(), 10.0f);
+    EXPECT_FLOAT_EQ(y.as_meters(), -5.0f);
 }
 
 TEST(SimulatorTest, GroundTimeCalculation) {
@@ -39,7 +39,7 @@ TEST(SimulatorTest, GroundTimeCalculation) {
     EXPECT_GT(ground_time.as_seconds(), 0.0f);
 
     const Point final_position = sim.get_position_at_time({.time = ground_time});
-    EXPECT_NEAR(final_position.y, 0.0f, 1e-4f);
+    EXPECT_NEAR(final_position.y.as_meters(), 0.0f, 1e-4f);
 }
 
 TEST(SimulatorTest, ApexCalculation) {
@@ -55,8 +55,8 @@ TEST(SimulatorTest, ApexCalculation) {
 
     const PointInTime apex = sim.get_apex_point_in_time();
     EXPECT_NEAR(apex.time.as_seconds(), 0.70710677f, 1e-4f);
-    EXPECT_NEAR(apex.position.x, 5.0f, 1e-4f);
-    EXPECT_NEAR(apex.position.y, 2.5f, 1e-4f);
+    EXPECT_NEAR(apex.position.x.as_meters(), 5.0f, 1e-4f);
+    EXPECT_NEAR(apex.position.y.as_meters(), 2.5f, 1e-4f);
 }
 
 TEST(SimulatorTest, DegreesSupport) {
@@ -75,9 +75,9 @@ TEST(SimulatorTest, DegreesSupport) {
     auto pos_deg = sim_deg.get_position_at_time({.time = Time::from_seconds(1.0f)});
     auto pos_rad = sim_rad.get_position_at_time({.time = Time::from_seconds(1.0f)});
 
-    EXPECT_NEAR(pos_deg.x, pos_rad.x, 0.0001f);
-    EXPECT_NEAR(pos_deg.y, pos_rad.y, 0.0001f);
-    EXPECT_NEAR(pos_deg.x, 0.0f, 0.0001f);
+    EXPECT_NEAR(pos_deg.x.as_meters(), pos_rad.x.as_meters(), 0.0001f);
+    EXPECT_NEAR(pos_deg.y.as_meters(), pos_rad.y.as_meters(), 0.0001f);
+    EXPECT_NEAR(pos_deg.x.as_meters(), 0.0f, 0.0001f);
 }
 
 TEST(SimulatorTest, DirectionSupport) {
@@ -98,9 +98,9 @@ TEST(SimulatorTest, DirectionSupport) {
     auto pos_right = sim_right.get_position_at_time({.time = Time::from_seconds(1.0f)});
     auto pos_left = sim_left.get_position_at_time({.time = Time::from_seconds(1.0f)});
 
-    EXPECT_FLOAT_EQ(pos_right.x, 10.0f);
-    EXPECT_FLOAT_EQ(pos_left.x, -10.0f);
-    EXPECT_FLOAT_EQ(pos_right.y, pos_left.y);
+    EXPECT_FLOAT_EQ(pos_right.x.as_meters(), 10.0f);
+    EXPECT_FLOAT_EQ(pos_left.x.as_meters(), -10.0f);
+    EXPECT_FLOAT_EQ(pos_right.y.as_meters(), pos_left.y.as_meters());
 }
 
 TEST(SimulatorTest, AngleValidation) {

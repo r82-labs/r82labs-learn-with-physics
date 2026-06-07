@@ -185,8 +185,8 @@ struct Efficiency {
 };
 
 struct Point {
-    float x;
-    float y;
+    Length x;
+    Length y;
 };
 
 struct PointInTime {
