@@ -1,5 +1,6 @@
 #pragma once
 
+#include <numbers>
 #include <stdexcept>
 
 namespace r82labs::learn_with_physics {
@@ -132,13 +133,9 @@ struct Angle {
         return Angle{degrees};
     }
 
-    [[nodiscard]] float as_radians() const {
-        return value * (3.14159265358979323846f / 180.0f);
-    }
+    [[nodiscard]] float as_radians() const { return value * (std::numbers::pi / 180.0f); }
 
-    [[nodiscard]] float as_degrees() const {
-        return value;
-    }
+    [[nodiscard]] float as_degrees() const { return value; }
 };
 
 struct LaunchOrientation {
@@ -149,7 +146,7 @@ struct LaunchOrientation {
     static LaunchOrientation toward_left(Angle a) { return {a, LaunchDirection::left}; }
 
     [[nodiscard]] float as_radians() const {
-        if ( direction == LaunchDirection::left) return 3.14159265358979323846f - angle.as_radians();
+        if (direction == LaunchDirection::left) return std::numbers::pi - angle.as_radians();
         return angle.as_radians();
     }
 };
