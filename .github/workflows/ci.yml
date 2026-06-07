@@ -23,7 +23,7 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y doxygen lcov graphviz clang-format
+        sudo apt-get install -y lcov clang-format
 
     - name: Check C++ formatting
       run: |
@@ -61,20 +61,6 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: true
 
-    - name: Generate Documentation
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: doxygen Doxyfile
-
-    - name: Setup Pages
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: actions/configure-pages@v4
-
-    - name: Upload Documentation Artifact
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: 'docs/html'
-
   version-and-release:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && !startsWith(github.event.head_commit.message, '[skip release]')
     needs: build-and-test
@@ -101,16 +87,5 @@ jobs:
         draft: false
         prerelease: false
 
-  deploy-docs:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
 
 
