@@ -13,17 +13,11 @@ struct Mass {
     float value;
     MassUnit unit;
 
-    static Mass from_kilograms(float kilograms) {
-        return Mass{kilograms, MassUnit::kilograms};
-    }
+    static Mass from_kilograms(float kilograms) { return Mass{kilograms, MassUnit::kilograms}; }
 
-    static Mass from_grams(float grams) {
-        return Mass{grams, MassUnit::grams};
-    }
+    static Mass from_grams(float grams) { return Mass{grams, MassUnit::grams}; }
 
-    static Mass from_pounds(float pounds) {
-        return Mass{pounds, MassUnit::pounds};
-    }
+    static Mass from_pounds(float pounds) { return Mass{pounds, MassUnit::pounds}; }
 
     [[nodiscard]] float as_kilograms() const {
         switch (unit) {
@@ -42,9 +36,7 @@ struct Length {
     float value;
     LengthUnit unit;
 
-    static Length from_meters(float meters) {
-        return Length{meters, LengthUnit::meters};
-    }
+    static Length from_meters(float meters) { return Length{meters, LengthUnit::meters}; }
 
     static Length from_centimeters(float centimeters) {
         return Length{centimeters, LengthUnit::centimeters};
@@ -54,13 +46,9 @@ struct Length {
         return Length{millimeters, LengthUnit::millimeters};
     }
 
-    static Length from_inches(float inches) {
-        return Length{inches, LengthUnit::inches};
-    }
+    static Length from_inches(float inches) { return Length{inches, LengthUnit::inches}; }
 
-    static Length from_feet(float feet) {
-        return Length{feet, LengthUnit::feet};
-    }
+    static Length from_feet(float feet) { return Length{feet, LengthUnit::feet}; }
 
     [[nodiscard]] float as_meters() const {
         switch (unit) {
@@ -83,21 +71,15 @@ struct Time {
     float value;
     TimeUnit unit;
 
-    static Time from_seconds(float seconds) {
-        return Time{seconds, TimeUnit::seconds};
-    }
+    static Time from_seconds(float seconds) { return Time{seconds, TimeUnit::seconds}; }
 
     static Time from_milliseconds(float milliseconds) {
         return Time{milliseconds, TimeUnit::milliseconds};
     }
 
-    static Time from_minutes(float minutes) {
-        return Time{minutes, TimeUnit::minutes};
-    }
+    static Time from_minutes(float minutes) { return Time{minutes, TimeUnit::minutes}; }
 
-    static Time from_hours(float hours) {
-        return Time{hours, TimeUnit::hours};
-    }
+    static Time from_hours(float hours) { return Time{hours, TimeUnit::hours}; }
 
     [[nodiscard]] float as_seconds() const {
         switch (unit) {
@@ -118,13 +100,9 @@ struct Angle {
     float value;
     AngleUnit unit;
 
-    static Angle from_radians(float radians) {
-        return Angle{radians, AngleUnit::radians};
-    }
+    static Angle from_radians(float radians) { return Angle{radians, AngleUnit::radians}; }
 
-    static Angle from_degrees(float degrees) {
-        return Angle{degrees, AngleUnit::degrees};
-    }
+    static Angle from_degrees(float degrees) { return Angle{degrees, AngleUnit::degrees}; }
 
     [[nodiscard]] float as_radians() const {
         switch (unit) {
@@ -137,7 +115,12 @@ struct Angle {
     }
 };
 
-enum class StiffnessUnit { newtons_per_meter, kilonewtons_per_meter, pounds_force_per_inch, pounds_force_per_foot };
+enum class StiffnessUnit {
+    newtons_per_meter,
+    kilonewtons_per_meter,
+    pounds_force_per_inch,
+    pounds_force_per_foot
+};
 
 struct Stiffness {
     float value;
@@ -189,13 +172,9 @@ struct Stiffness {
 struct Efficiency {
     float value;
 
-    static Efficiency from_ratio(float ratio) {
-        return Efficiency{ratio};
-    }
+    static Efficiency from_ratio(float ratio) { return Efficiency{ratio}; }
 
-    [[nodiscard]] float as_ratio() const {
-        return value;
-    }
+    [[nodiscard]] float as_ratio() const { return value; }
 };
 
 struct Point {

@@ -25,7 +25,8 @@ TEST(SlingshotTest, StiffnessUnitConversion) {
 }
 
 TEST(SlingshotTest, RejectsNegativeStiffness) {
-    EXPECT_THROW(Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(-10.0f)}), std::invalid_argument);
+    EXPECT_THROW(Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(-10.0f)}),
+                 std::invalid_argument);
 }
 
 TEST(SlingshotTest, RejectsInvalidEfficiency) {

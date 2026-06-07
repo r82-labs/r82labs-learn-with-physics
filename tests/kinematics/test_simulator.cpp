@@ -8,7 +8,8 @@
 using namespace r82labs::learn_with_physics;
 
 TEST(SimulatorTest, ExactPositionAtTime) {
-    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f), .efficiency = Efficiency::from_ratio(1.0f)});
+    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
+                           .efficiency = Efficiency::from_ratio(1.0f)});
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
@@ -24,7 +25,8 @@ TEST(SimulatorTest, ExactPositionAtTime) {
 }
 
 TEST(SimulatorTest, GroundTimeCalculation) {
-    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f), .efficiency = Efficiency::from_ratio(1.0f)});
+    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
+                           .efficiency = Efficiency::from_ratio(1.0f)});
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
@@ -41,7 +43,8 @@ TEST(SimulatorTest, GroundTimeCalculation) {
 }
 
 TEST(SimulatorTest, ApexCalculation) {
-    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f), .efficiency = Efficiency::from_ratio(1.0f)});
+    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
+                           .efficiency = Efficiency::from_ratio(1.0f)});
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
@@ -57,7 +60,8 @@ TEST(SimulatorTest, ApexCalculation) {
 }
 
 TEST(SimulatorTest, DegreesSupport) {
-    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f), .efficiency = Efficiency::from_ratio(1.0f)});
+    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
+                           .efficiency = Efficiency::from_ratio(1.0f)});
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim_deg({.slingshot = sling,
                              .projectile = proj,
@@ -77,7 +81,8 @@ TEST(SimulatorTest, DegreesSupport) {
 }
 
 TEST(SimulatorTest, DirectionSupport) {
-    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f), .efficiency = Efficiency::from_ratio(1.0f)});
+    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
+                           .efficiency = Efficiency::from_ratio(1.0f)});
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim_right({.slingshot = sling,
                                .projectile = proj,
@@ -99,7 +104,8 @@ TEST(SimulatorTest, DirectionSupport) {
 }
 
 TEST(SimulatorTest, AngleValidation) {
-    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f), .efficiency = Efficiency::from_ratio(1.0f)});
+    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
+                           .efficiency = Efficiency::from_ratio(1.0f)});
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
 
     // Test bounds (Explicitly checking 0 and 90 degrees)
@@ -139,7 +145,8 @@ TEST(SimulatorTest, AngleValidation) {
 }
 
 TEST(SimulatorTest, GetProjectile) {
-    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f), .efficiency = Efficiency::from_ratio(1.0f)});
+    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
+                           .efficiency = Efficiency::from_ratio(1.0f)});
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
