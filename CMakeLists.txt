@@ -12,7 +12,9 @@ else()
     option(BUILD_TESTING "Build unit tests" OFF)
 endif()
 
-add_library(r82labs_learn_with_physics SHARED src/library.cpp)
+add_library(r82labs_learn_with_physics SHARED 
+    src/kinematics/simulator.cpp
+)
 
 target_include_directories(r82labs_learn_with_physics
     PUBLIC
@@ -34,7 +36,9 @@ if(BUILD_TESTING)
     FetchContent_MakeAvailable(googletest)
 
     add_executable(r82labs_learn_with_physics_tests
-        tests/test_library.cpp
+        tests/objects/test_projectile.cpp
+        tests/objects/test_slingshot.cpp
+        tests/kinematics/test_simulator.cpp
     )
 
     target_link_libraries(r82labs_learn_with_physics_tests

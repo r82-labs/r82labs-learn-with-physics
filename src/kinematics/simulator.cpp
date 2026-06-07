@@ -1,4 +1,4 @@
-#include "library.hpp"
+#include "simulator.hpp"
 
 #include <cmath>
 #include <limits>
@@ -51,4 +51,5 @@ PointInTime Simulator::get_apex_point_in_time() const {
 float Simulator::get_time_at_ground() const {
     return (2.0f * y_velocity_factor) / gravity;
 }
+
 }  // namespace r82labs::learn_with_physics
