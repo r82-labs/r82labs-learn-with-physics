@@ -32,11 +32,6 @@ cd build
 ctest --output-on-failure
 ```
 
-## 📖 Documentation
-
-The latest API documentation is automatically published to GitHub Pages:
-[View Documentation](https://r82-labs.github.io/r82labs-learn-with-physics/)
-
 ## 📦 Releases
 
 Releases are automatically created on every merge to `main` using semantic versioning.
