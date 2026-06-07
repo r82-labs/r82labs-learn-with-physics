@@ -55,7 +55,9 @@ jobs:
         lcov --list coverage_filtered.info
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v5
+      uses: codecov/codecov-action@v4
+      env:
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       with:
         files: coverage_filtered.info
         token: ${{ secrets.CODECOV_TOKEN }}
@@ -66,7 +68,9 @@ jobs:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v4
+      env:
+        FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       with:
         fetch-depth: 0
 
