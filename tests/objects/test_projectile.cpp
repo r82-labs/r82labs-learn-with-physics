@@ -61,6 +61,6 @@ TEST(CoreTypesTest, LaunchOrientation) {
     const LaunchOrientation right = LaunchOrientation::toward_right(a45);
     const LaunchOrientation left = LaunchOrientation::toward_left(a45);
 
-    EXPECT_FLOAT_EQ(right.as_radians(), 0.78539816f);  // 45 deg
-    EXPECT_FLOAT_EQ(left.as_radians(), 2.35619449f);  // 135 deg
+    EXPECT_FLOAT_EQ(right.as_radians(), 0.78539816f);
+    EXPECT_FLOAT_EQ(left.as_radians(), 2.35619449f);
 }
