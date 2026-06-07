@@ -45,6 +45,7 @@ if(BUILD_TESTING)
         PRIVATE
             r82labs_learn_with_physics
             gtest_main
+            gmock
     )
 
     include(GoogleTest)

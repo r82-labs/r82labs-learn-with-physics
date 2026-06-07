@@ -1,10 +1,12 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include <stdexcept>
 
 #include "r82labs_learn_with_physics.hpp"
 
 using namespace r82labs::learn_with_physics;
+using namespace testing;
 
 TEST(SlingshotTest, PropertyAccessors) {
     const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
@@ -25,13 +27,17 @@ TEST(SlingshotTest, StiffnessUnitConversion) {
 }
 
 TEST(EfficiencyTest, RejectsInvalidRatios) {
-    EXPECT_THROW(Efficiency::from_ratio(-0.1f), std::invalid_argument);
-    EXPECT_THROW(Efficiency::from_ratio(1.1f), std::invalid_argument);
+    EXPECT_THAT([]() { Efficiency::from_ratio(-0.1f); },
+                ThrowsMessage<std::invalid_argument>(HasSubstr("between 0 and 1")));
+                
+    EXPECT_THAT([]() { Efficiency::from_ratio(1.1f); },
+                ThrowsMessage<std::invalid_argument>(HasSubstr("between 0 and 1")));
+
     EXPECT_NO_THROW(Efficiency::from_ratio(0.0f));
     EXPECT_NO_THROW(Efficiency::from_ratio(1.0f));
 }
 
 TEST(SlingshotTest, RejectsNegativeStiffness) {
-    EXPECT_THROW(Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(-10.0f)}),
-                 std::invalid_argument);
+    EXPECT_THAT([]() { Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(-10.0f)}); },
+                ThrowsMessage<std::invalid_argument>(HasSubstr("must be non-negative")));
 }

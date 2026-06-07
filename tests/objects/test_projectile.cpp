@@ -1,14 +1,20 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include <stdexcept>
 
 #include "r82labs_learn_with_physics.hpp"
 
 using namespace r82labs::learn_with_physics;
+using namespace testing;
 
 TEST(ProjectileTest, RejectsInvalidMass) {
-    EXPECT_THROW(Projectile({.mass = Mass::from_kilograms(0.0f)}), std::invalid_argument);
-    EXPECT_THROW(Projectile({.mass = Mass::from_kilograms(-1.0f)}), std::invalid_argument);
+    EXPECT_THAT([]() { Projectile({.mass = Mass::from_kilograms(0.0f)}); },
+                ThrowsMessage<std::invalid_argument>(HasSubstr("mass must be positive")));
+                
+    EXPECT_THAT([]() { Projectile({.mass = Mass::from_kilograms(-1.0f)}); },
+                ThrowsMessage<std::invalid_argument>(HasSubstr("mass must be positive")));
+                
     EXPECT_NO_THROW(Projectile({.mass = Mass::from_kilograms(0.1f)}));
 }
 
@@ -23,12 +29,18 @@ TEST(ProjectileTest, AcceptsDifferentMassUnits) {
 }
 
 TEST(CoreTypesTest, RejectsInvalidLength) {
-    EXPECT_THROW(Length::from_meters(0.0f), std::invalid_argument);
-    EXPECT_THROW(Length::from_centimeters(-1.0f), std::invalid_argument);
+    EXPECT_THAT([]() { Length::from_meters(0.0f); },
+                ThrowsMessage<std::invalid_argument>(HasSubstr("length must be positive")));
+                
+    EXPECT_THAT([]() { Length::from_centimeters(-1.0f); },
+                ThrowsMessage<std::invalid_argument>(HasSubstr("length must be positive")));
+                
     EXPECT_NO_THROW(Length::from_inches(0.1f));
 }
 
 TEST(CoreTypesTest, RejectsNegativeTime) {
-    EXPECT_THROW(Time::from_seconds(-0.1f), std::invalid_argument);
+    EXPECT_THAT([]() { Time::from_seconds(-0.1f); },
+                ThrowsMessage<std::invalid_argument>(HasSubstr("time cannot be negative")));
+                
     EXPECT_NO_THROW(Time::from_seconds(0.0f));
 }
