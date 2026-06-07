@@ -4,12 +4,18 @@
 
 namespace r82labs::learn_with_physics {
 
-enum class AngleUnit { radians, degrees };
 enum class LaunchDirection { right, left };
 
 enum class MassUnit { kilograms, grams, pounds };
 enum class LengthUnit { meters, centimeters, millimeters, inches, feet };
 enum class TimeUnit { seconds, milliseconds, minutes, hours };
+
+enum class StiffnessUnit {
+    newtons_per_meter,
+    kilonewtons_per_meter,
+    pounds_force_per_inch,
+    pounds_force_per_foot
+};
 
 struct Mass {
     float value;
@@ -118,39 +124,19 @@ struct Time {
 
 struct Angle {
     float value;
-    AngleUnit unit;
-
-    static Angle from_radians(float radians) {
-        if (radians < -1e-6f || radians > 1.57079632679f + 1e-6f) {
-            throw std::out_of_range("angle must be between 0 and 90 degrees");
-        }
-        return Angle{radians, AngleUnit::radians};
-    }
 
     static Angle from_degrees(float degrees) {
         if (degrees < -1e-4f || degrees > 90.0f + 1e-4f) {
             throw std::out_of_range("angle must be between 0 and 90 degrees");
         }
-        return Angle{degrees, AngleUnit::degrees};
+        return Angle{degrees};
     }
 
     [[nodiscard]] float as_radians() const {
-        switch (unit) {
-            case AngleUnit::radians:
-                return value;
-            case AngleUnit::degrees:
-                return value * (3.14159265358979323846f / 180.0f);
-        }
-        return value;
+        return value * (3.14159265358979323846f / 180.0f);
     }
 
     [[nodiscard]] float as_degrees() const {
-        switch (unit) {
-            case AngleUnit::radians:
-                return value * (180.0f / 3.14159265358979323846f);
-            case AngleUnit::degrees:
-                return value;
-        }
         return value;
     }
 };
@@ -163,23 +149,8 @@ struct LaunchOrientation {
     static LaunchOrientation toward_left(Angle a) { return {a, LaunchDirection::left}; }
 
     [[nodiscard]] float as_radians() const {
-        switch (unit) {
-            case AngleUnit::radians:
-                return value;
-            case AngleUnit::degrees:
-                return value * (3.14159265358979323846f / 180.0f);
-        }
-        return value;
-    }
-
-    [[nodiscard]] float as_degrees() const {
-        switch (unit) {
-            case AngleUnit::radians:
-                return value * (180.0f / 3.14159265358979323846f);
-            case AngleUnit::degrees:
-                return value;
-        }
-        return value;
+        if ( direction == LaunchDirection::left) return 3.14159265358979323846f - angle.as_radians();
+        return angle.as_radians();
     }
 };
 
@@ -199,6 +170,53 @@ struct Acceleration {
                 return value;
         }
         return value;
+    }
+};
+
+struct Stiffness {
+    float value;
+    StiffnessUnit unit;
+
+    static Stiffness from_newtons_per_meter(float stiffness) {
+        return Stiffness{stiffness, StiffnessUnit::newtons_per_meter};
+    }
+
+    static Stiffness from_kilonewtons_per_meter(float stiffness) {
+        return Stiffness{stiffness, StiffnessUnit::kilonewtons_per_meter};
+    }
+
+    static Stiffness from_pounds_force_per_inch(float stiffness) {
+        return Stiffness{stiffness, StiffnessUnit::pounds_force_per_inch};
+    }
+
+    static Stiffness from_pounds_force_per_foot(float stiffness) {
+        return Stiffness{stiffness, StiffnessUnit::pounds_force_per_foot};
+    }
+
+    [[nodiscard]] float as_newtons_per_meter() const {
+        switch (unit) {
+            case StiffnessUnit::newtons_per_meter:
+                return value;
+            case StiffnessUnit::kilonewtons_per_meter:
+                return value * 1000.0f;
+            case StiffnessUnit::pounds_force_per_inch:
+                return value * 175.126771f;
+            case StiffnessUnit::pounds_force_per_foot:
+                return value * 14.593903f;
+        }
+        return value;
+    }
+
+    [[nodiscard]] float as_kilonewtons_per_meter() const {
+        return as_newtons_per_meter() / 1000.0f;
+    }
+
+    [[nodiscard]] float as_pounds_force_per_inch() const {
+        return as_newtons_per_meter() / 175.126771f;
+    }
+
+    [[nodiscard]] float as_pounds_force_per_foot() const {
+        return as_newtons_per_meter() / 14.593903f;
     }
 };
 

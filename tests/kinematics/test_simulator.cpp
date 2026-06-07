@@ -16,7 +16,7 @@ TEST(SimulatorTest, ExactPositionAtTime) {
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
                          .draw_length = Length::from_meters(1.0f),
-                         .orientation = LaunchOrientation::toward_right(Angle::from_radians(0.0f)),
+                         .orientation = LaunchOrientation::toward_right(Angle::from_degrees(0.0f)),
                          .g = Acceleration::from_meters_per_second_squared(10.0f)});
 
     auto [x, y] = sim.get_position_at_time({.time = Time::from_seconds(1.0f)});
@@ -56,29 +56,6 @@ TEST(SimulatorTest, ApexCalculation) {
     EXPECT_NEAR(apex.time.as_seconds(), 0.70710677f, 1e-4f);
     EXPECT_NEAR(apex.position.x, 5.0f, 1e-4f);
     EXPECT_NEAR(apex.position.y, 2.5f, 1e-4f);
-}
-
-TEST(SimulatorTest, DegreesSupport) {
-    const Slingshot sling({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
-                           .efficiency = Efficiency::from_ratio(1.0f)});
-    const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
-    const Simulator sim_deg(
-        {.slingshot = sling,
-         .projectile = proj,
-         .draw_length = Length::from_meters(1.0f),
-         .orientation = LaunchOrientation::toward_right(Angle::from_degrees(90.0f))});
-    const Simulator sim_rad({.slingshot = sling,
-                             .projectile = proj,
-                             .draw_length = Length::from_meters(1.0f),
-                             .orientation = LaunchOrientation::toward_right(
-                                 Angle::from_radians(std::numbers::pi_v<float> / 2.0f))});
-
-    auto pos_deg = sim_deg.get_position_at_time({.time = Time::from_seconds(1.0f)});
-    auto pos_rad = sim_rad.get_position_at_time({.time = Time::from_seconds(1.0f)});
-
-    EXPECT_NEAR(pos_deg.x, pos_rad.x, 0.0001f);
-    EXPECT_NEAR(pos_deg.y, pos_rad.y, 0.0001f);
-    EXPECT_NEAR(pos_deg.x, 0.0f, 0.0001f);
 }
 
 TEST(SimulatorTest, DirectionSupport) {
@@ -137,7 +114,7 @@ TEST(SimulatorTest, GetProjectile) {
         {.slingshot = sling,
          .projectile = proj,
          .draw_length = Length::from_meters(1.0f),
-         .orientation = LaunchOrientation::toward_right(Angle::from_radians(0.0f))});
+         .orientation = LaunchOrientation::toward_right(Angle::from_degrees(0.0f))});
 
     EXPECT_FLOAT_EQ(sim.get_projectile().get_mass().as_kilograms(), 1.0f);
 }
