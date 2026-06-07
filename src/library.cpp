@@ -42,4 +42,13 @@ Point Simulator::get_position_at_time(const TimeRequest& request) const {
     return {x_velocity_factor * request.time,
             (y_velocity_factor - half_gravity_factor * request.time) * request.time};
 }
+
+PointInTime Simulator::get_apex_point_in_time() const {
+    const float apex_time = y_velocity_factor / gravity;
+    return PointInTime{get_position_at_time({.time = apex_time}), apex_time};
+}
+
+float Simulator::get_time_at_ground() const {
+    return (2.0f * y_velocity_factor) / gravity;
+}
 }  // namespace r82labs::learn_with_physics

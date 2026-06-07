@@ -47,6 +47,41 @@ TEST(SimulatorTest, ExactPositionAtTime) {
     EXPECT_FLOAT_EQ(y, -5.0f);
 }
 
+TEST(SimulatorTest, GroundTimeCalculation) {
+    const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
+    const Projectile proj({.mass = 1.0f});
+    const Simulator sim({.slingshot = sling,
+                         .projectile = proj,
+                         .draw_length = 1.0f,
+                         .angle = 45.0f,
+                         .unit = AngleUnit::degrees,
+                         .direction = LaunchDirection::right,
+                         .g = 10.0f});
+
+    const float ground_time = sim.get_time_at_ground();
+    EXPECT_GT(ground_time, 0.0f);
+
+    const Point final_position = sim.get_position_at_time({.time = ground_time});
+    EXPECT_NEAR(final_position.y, 0.0f, 1e-4f);
+}
+
+TEST(SimulatorTest, ApexCalculation) {
+    const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
+    const Projectile proj({.mass = 1.0f});
+    const Simulator sim({.slingshot = sling,
+                         .projectile = proj,
+                         .draw_length = 1.0f,
+                         .angle = 45.0f,
+                         .unit = AngleUnit::degrees,
+                         .direction = LaunchDirection::right,
+                         .g = 10.0f});
+
+    const PointInTime apex = sim.get_apex_point_in_time();
+    EXPECT_NEAR(apex.time, 0.70710677f, 1e-4f);
+    EXPECT_NEAR(apex.position.x, 5.0f, 1e-4f);
+    EXPECT_NEAR(apex.position.y, 2.5f, 1e-4f);
+}
+
 TEST(SimulatorTest, DegreesSupport) {
     const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
     const Projectile proj({.mass = 1.0f});

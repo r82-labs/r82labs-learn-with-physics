@@ -34,6 +34,11 @@ struct Point {
     float y;  ///< The vertical coordinate.
 };
 
+struct PointInTime {
+    Point position;  ///< Projectile position at the sampled time.
+    float time;      ///< Time at which the point occurs.
+};
+
 /**
  * @struct ProjectileConfig
  * @brief Named parameters for constructing a Projectile.
@@ -157,6 +162,16 @@ class Simulator {
      * @return Point The (x, y) coordinates at time t.
      */
     [[nodiscard]] Point get_position_at_time(const TimeRequest& request) const;
+
+    /**
+     * @brief Returns the point and time of the trajectory apex.
+     */
+    [[nodiscard]] PointInTime get_apex_point_in_time() const;
+
+    /**
+     * @brief Returns the time when the projectile returns to ground level.
+     */
+    [[nodiscard]] float get_time_at_ground() const;
 
     /**
      * @brief Provides access to the projectile being simulated.
