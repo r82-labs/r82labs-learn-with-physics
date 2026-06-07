@@ -1,6 +1,8 @@
 #pragma once
 #include <stdexcept>
 
+#include "core/types.hpp"
+
 namespace r82labs::learn_with_physics {
 
 struct SlingshotConfig {

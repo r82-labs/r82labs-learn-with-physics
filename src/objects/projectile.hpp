@@ -1,6 +1,7 @@
 #pragma once
-#include "../core/types.hpp"
 #include <stdexcept>
+
+#include "core/types.hpp"
 
 namespace r82labs::learn_with_physics {
 

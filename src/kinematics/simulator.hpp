@@ -1,7 +1,7 @@
 #pragma once
-#include "../core/types.hpp"
-#include "../objects/projectile.hpp"
-#include "../objects/slingshot.hpp"
+#include "core/types.hpp"
+#include "objects/projectile.hpp"
+#include "objects/slingshot.hpp"
 
 namespace r82labs::learn_with_physics {
 
