@@ -9,8 +9,8 @@ struct SimulatorConfig {
     const Slingshot& slingshot;
     const Projectile& projectile;
     Length draw_length = Length::from_meters(1.0f);
-    Angle angle = Angle::from_radians(45.0f);
-    LaunchDirection direction = LaunchDirection::right;
+    LaunchOrientation orientation = LaunchOrientation::toward_right(Angle::from_degrees(45.0f));
+
     Acceleration g = Acceleration::from_meters_per_second_squared(9.81f);
 };
 

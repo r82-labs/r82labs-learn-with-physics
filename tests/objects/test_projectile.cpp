@@ -44,3 +44,23 @@ TEST(CoreTypesTest, RejectsNegativeTime) {
 
     EXPECT_NO_THROW(Time::from_seconds(0.0f));
 }
+
+TEST(CoreTypesTest, AngleValidation) {
+    EXPECT_NO_THROW(Angle::from_degrees(0.0f));
+    EXPECT_NO_THROW(Angle::from_degrees(90.0f));
+
+    EXPECT_THAT([]() { Angle::from_degrees(-0.1f); },
+                ThrowsMessage<std::out_of_range>(HasSubstr("between 0 and 90 degrees")));
+
+    EXPECT_THAT([]() { Angle::from_degrees(90.1f); },
+                ThrowsMessage<std::out_of_range>(HasSubstr("between 0 and 90 degrees")));
+}
+
+TEST(CoreTypesTest, LaunchOrientation) {
+    const Angle a45 = Angle::from_degrees(45.0f);
+    const LaunchOrientation right = LaunchOrientation::toward_right(a45);
+    const LaunchOrientation left = LaunchOrientation::toward_left(a45);
+
+    EXPECT_FLOAT_EQ(right.as_radians(), 0.78539816f);  // 45 deg
+    EXPECT_FLOAT_EQ(left.as_radians(), 2.35619449f);   // 135 deg
+}

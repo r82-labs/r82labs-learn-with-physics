@@ -11,8 +11,7 @@ int main() {
     Simulator sim({.slingshot = slingshot,
                    .projectile = proj,
                    .draw_length = Length::from_meters(1.0f),
-                   .angle = Angle::from_degrees(45.0f),
-                   .direction = LaunchDirection::right});
+                   .orientation = LaunchOrientation::toward_right(Angle::from_degrees(45.0f))});
 
     const Point position = sim.get_position_at_time({.time = Time::from_seconds(0.5f)});
     std::cout << "Position at t=0.5s: (" << position.x << ", " << position.y << ")\n";

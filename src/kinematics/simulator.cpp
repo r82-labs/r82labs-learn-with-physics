@@ -1,7 +1,6 @@
 #include "simulator.hpp"
 
 #include <cmath>
-#include <limits>
 #include <numbers>
 
 namespace r82labs::learn_with_physics {
@@ -12,22 +11,16 @@ Simulator::Simulator(const SimulatorConfig& config)
       x_velocity_factor(0.0f),
       y_velocity_factor(0.0f),
       half_gravity_factor(0.5f * config.g.as_meters_per_second_squared()) {
-    const float angle_radians = config.angle.as_radians();
-
-    constexpr float epsilon = std::numeric_limits<float>::epsilon();
-    if (angle_radians < -epsilon || angle_radians > (std::numbers::pi_v<float> / 2.0f + epsilon)) {
-        throw std::out_of_range("Launch angle must be between 0 and 90 degrees.");
-    }
-
     const float draw_length_m = config.draw_length.as_meters();
     const float mass_kg = projectile.get_mass().as_kilograms();
     const float efficiency_ratio = config.slingshot.get_efficiency().as_ratio();
     const float stiffness_npm = config.slingshot.get_stiffness().as_newtons_per_meter();
     const float v0 = draw_length_m * std::sqrt((efficiency_ratio * stiffness_npm) / mass_kg);
-    const float dir_multiplier = (config.direction == LaunchDirection::right) ? 1.0f : -1.0f;
 
-    x_velocity_factor = v0 * std::cos(angle_radians) * dir_multiplier;
-    y_velocity_factor = v0 * std::sin(angle_radians);
+    const float orientation_radians = config.orientation.as_radians();
+
+    x_velocity_factor = v0 * std::cos(orientation_radians);
+    y_velocity_factor = v0 * std::sin(orientation_radians);
 }
 
 Point Simulator::get_position_at_time(const TimeRequest& request) const {
