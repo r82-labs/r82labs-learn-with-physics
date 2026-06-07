@@ -18,7 +18,7 @@ TEST(SimulatorTest, ExactPositionAtTime) {
                          .direction = LaunchDirection::right,
                          .g = 10.0f});
 
-    auto [x, y] = sim.get_position_at_time({.time = 1.0f});
+    auto [x, y] = sim.get_position_at_time({.time = Time::from_seconds(1.0f)});
 
     EXPECT_FLOAT_EQ(x, 10.0f);
     EXPECT_FLOAT_EQ(y, -5.0f);
@@ -35,8 +35,8 @@ TEST(SimulatorTest, GroundTimeCalculation) {
                          .direction = LaunchDirection::right,
                          .g = 10.0f});
 
-    const float ground_time = sim.get_time_at_ground();
-    EXPECT_GT(ground_time, 0.0f);
+    const Time ground_time = sim.get_time_at_ground();
+    EXPECT_GT(ground_time.as_seconds(), 0.0f);
 
     const Point final_position = sim.get_position_at_time({.time = ground_time});
     EXPECT_NEAR(final_position.y, 0.0f, 1e-4f);
@@ -54,7 +54,7 @@ TEST(SimulatorTest, ApexCalculation) {
                          .g = 10.0f});
 
     const PointInTime apex = sim.get_apex_point_in_time();
-    EXPECT_NEAR(apex.time, 0.70710677f, 1e-4f);
+    EXPECT_NEAR(apex.time.as_seconds(), 0.70710677f, 1e-4f);
     EXPECT_NEAR(apex.position.x, 5.0f, 1e-4f);
     EXPECT_NEAR(apex.position.y, 2.5f, 1e-4f);
 }
@@ -73,8 +73,8 @@ TEST(SimulatorTest, DegreesSupport) {
                              .angle = std::numbers::pi_v<float> / 2.0f,
                              .unit = AngleUnit::radians});
 
-    auto pos_deg = sim_deg.get_position_at_time({.time = 1.0f});
-    auto pos_rad = sim_rad.get_position_at_time({.time = 1.0f});
+    auto pos_deg = sim_deg.get_position_at_time({.time = Time::from_seconds(1.0f)});
+    auto pos_rad = sim_rad.get_position_at_time({.time = Time::from_seconds(1.0f)});
 
     EXPECT_NEAR(pos_deg.x, pos_rad.x, 0.0001f);
     EXPECT_NEAR(pos_deg.y, pos_rad.y, 0.0001f);
@@ -97,8 +97,8 @@ TEST(SimulatorTest, DirectionSupport) {
                               .unit = AngleUnit::degrees,
                               .direction = LaunchDirection::left});
 
-    auto pos_right = sim_right.get_position_at_time({.time = 1.0f});
-    auto pos_left = sim_left.get_position_at_time({.time = 1.0f});
+    auto pos_right = sim_right.get_position_at_time({.time = Time::from_seconds(1.0f)});
+    auto pos_left = sim_left.get_position_at_time({.time = Time::from_seconds(1.0f)});
 
     EXPECT_FLOAT_EQ(pos_right.x, 10.0f);
     EXPECT_FLOAT_EQ(pos_left.x, -10.0f);
@@ -174,5 +174,5 @@ TEST(LibraryCoverageTest, AdditionalCoverage) {
                                  .draw_length = Length::from_meters(1.0f),
                                  .angle = 45.0f,
                                  .unit = AngleUnit::degrees});
-    auto [x, y] = default_sim.get_position_at_time({.time = 0.1f});
+    auto [x, y] = default_sim.get_position_at_time({.time = Time::from_seconds(0.1f)});
 }

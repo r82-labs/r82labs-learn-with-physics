@@ -7,6 +7,7 @@ enum class LaunchDirection { right, left };
 
 enum class MassUnit { kilograms, grams, pounds };
 enum class LengthUnit { meters, centimeters, millimeters, inches, feet };
+enum class TimeUnit { seconds, milliseconds, minutes, hours };
 
 struct Mass {
     float value;
@@ -78,6 +79,41 @@ struct Length {
     }
 };
 
+struct Time {
+    float value;
+    TimeUnit unit;
+
+    static Time from_seconds(float seconds) {
+        return Time{seconds, TimeUnit::seconds};
+    }
+
+    static Time from_milliseconds(float milliseconds) {
+        return Time{milliseconds, TimeUnit::milliseconds};
+    }
+
+    static Time from_minutes(float minutes) {
+        return Time{minutes, TimeUnit::minutes};
+    }
+
+    static Time from_hours(float hours) {
+        return Time{hours, TimeUnit::hours};
+    }
+
+    [[nodiscard]] float as_seconds() const {
+        switch (unit) {
+            case TimeUnit::seconds:
+                return value;
+            case TimeUnit::milliseconds:
+                return value / 1000.0f;
+            case TimeUnit::minutes:
+                return value * 60.0f;
+            case TimeUnit::hours:
+                return value * 3600.0f;
+        }
+        return value;
+    }
+};
+
 struct Point {
     float x;
     float y;
@@ -85,11 +121,11 @@ struct Point {
 
 struct PointInTime {
     Point position;
-    float time;
+    Time time;
 };
 
 struct TimeRequest {
-    float time = 0.0f;
+    Time time = Time::from_seconds(0.0f);
 };
 
 }  // namespace r82labs::learn_with_physics

@@ -41,17 +41,20 @@ Simulator::Simulator(const SimulatorConfig& config)
 }
 
 Point Simulator::get_position_at_time(const TimeRequest& request) const {
-    return {x_velocity_factor * request.time,
-            (y_velocity_factor - half_gravity_factor * request.time) * request.time};
+    const float time_seconds = request.time.as_seconds();
+    return {x_velocity_factor * time_seconds,
+            (y_velocity_factor - half_gravity_factor * time_seconds) * time_seconds};
 }
 
 PointInTime Simulator::get_apex_point_in_time() const {
     const float apex_time = y_velocity_factor / gravity;
-    return PointInTime{get_position_at_time({.time = apex_time}), apex_time};
+    return PointInTime{get_position_at_time({.time = Time::from_seconds(apex_time)}),
+                       Time::from_seconds(apex_time)};
 }
 
-float Simulator::get_time_at_ground() const {
-    return (2.0f * y_velocity_factor) / gravity;
+Time Simulator::get_time_at_ground() const {
+    const float ground_seconds = (2.0f * y_velocity_factor) / gravity;
+    return Time::from_seconds(ground_seconds);
 }
 
 }  // namespace r82labs::learn_with_physics

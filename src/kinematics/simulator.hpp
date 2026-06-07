@@ -26,7 +26,7 @@ class Simulator {
     explicit Simulator(const SimulatorConfig& config);
     [[nodiscard]] Point get_position_at_time(const TimeRequest& request) const;
     [[nodiscard]] PointInTime get_apex_point_in_time() const;
-    [[nodiscard]] float get_time_at_ground() const;
+    [[nodiscard]] Time get_time_at_ground() const;
     [[nodiscard]] const Projectile& get_projectile() const { return projectile; }
 };
 

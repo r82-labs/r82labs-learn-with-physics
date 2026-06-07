@@ -14,7 +14,7 @@ int main() {
                    .unit = AngleUnit::degrees,
                    .direction = LaunchDirection::right});
 
-    const Point position = sim.get_position_at_time({.time = 0.5f});
+    const Point position = sim.get_position_at_time({.time = Time::from_seconds(0.5f)});
     std::cout << "Position at t=0.5s: (" << position.x << ", " << position.y << ")\n";
 
     return 0;
