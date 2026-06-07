@@ -5,7 +5,7 @@
 using namespace r82labs::learn_with_physics;
 
 int main() {
-    Projectile proj({.mass = 0.2f});
+    Projectile proj({.mass = Mass::from_kilograms(0.2f)});
     Slingshot slingshot({.band_stiffness = 100.0f, .efficiency = 0.8f});
     Simulator sim({.slingshot = slingshot,
                    .projectile = proj,

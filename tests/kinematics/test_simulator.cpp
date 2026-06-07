@@ -9,7 +9,7 @@ using namespace r82labs::learn_with_physics;
 
 TEST(SimulatorTest, ExactPositionAtTime) {
     const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
-    const Projectile proj({.mass = 1.0f});
+    const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
                          .draw_length = 1.0f,
@@ -26,7 +26,7 @@ TEST(SimulatorTest, ExactPositionAtTime) {
 
 TEST(SimulatorTest, GroundTimeCalculation) {
     const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
-    const Projectile proj({.mass = 1.0f});
+    const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
                          .draw_length = 1.0f,
@@ -44,7 +44,7 @@ TEST(SimulatorTest, GroundTimeCalculation) {
 
 TEST(SimulatorTest, ApexCalculation) {
     const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
-    const Projectile proj({.mass = 1.0f});
+    const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
                          .draw_length = 1.0f,
@@ -61,7 +61,7 @@ TEST(SimulatorTest, ApexCalculation) {
 
 TEST(SimulatorTest, DegreesSupport) {
     const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
-    const Projectile proj({.mass = 1.0f});
+    const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim_deg({.slingshot = sling,
                              .projectile = proj,
                              .draw_length = 1.0f,
@@ -83,7 +83,7 @@ TEST(SimulatorTest, DegreesSupport) {
 
 TEST(SimulatorTest, DirectionSupport) {
     const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
-    const Projectile proj({.mass = 1.0f});
+    const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim_right({.slingshot = sling,
                                .projectile = proj,
                                .draw_length = 1.0f,
@@ -107,7 +107,7 @@ TEST(SimulatorTest, DirectionSupport) {
 
 TEST(SimulatorTest, AngleValidation) {
     const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
-    const Projectile proj({.mass = 1.0f});
+    const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
 
     // Test bounds (Explicitly checking 0 and 90 degrees)
     EXPECT_NO_THROW(Simulator({.slingshot = sling,
@@ -154,19 +154,19 @@ TEST(SimulatorTest, AngleValidation) {
 
 TEST(SimulatorTest, GetProjectile) {
     const Slingshot sling({.band_stiffness = 100.0f, .efficiency = 1.0f});
-    const Projectile proj({.mass = 1.0f});
+    const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
                          .draw_length = 1.0f,
                          .angle = 0.0f,
                          .unit = AngleUnit::radians});
 
-    EXPECT_FLOAT_EQ(sim.get_projectile().get_mass(), 1.0f);
+    EXPECT_FLOAT_EQ(sim.get_projectile().get_mass().as_kilograms(), 1.0f);
 }
 
 TEST(LibraryCoverageTest, AdditionalCoverage) {
-    const Projectile p({.mass = 5.0f});
-    EXPECT_FLOAT_EQ(p.get_mass(), 5.0f);
+    const Projectile p({.mass = Mass::from_kilograms(5.0f)});
+    EXPECT_FLOAT_EQ(p.get_mass().as_kilograms(), 5.0f);
 
     const Slingshot default_sling({.band_stiffness = 100.0f});
     const Simulator default_sim({.slingshot = default_sling,
