@@ -12,7 +12,7 @@ TEST(SimulatorTest, ExactPositionAtTime) {
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
-                         .draw_length = 1.0f,
+                         .draw_length = Length::from_meters(1.0f),
                          .angle = 0.0f,
                          .unit = AngleUnit::radians,
                          .direction = LaunchDirection::right,
@@ -29,7 +29,7 @@ TEST(SimulatorTest, GroundTimeCalculation) {
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
-                         .draw_length = 1.0f,
+                         .draw_length = Length::from_meters(1.0f),
                          .angle = 45.0f,
                          .unit = AngleUnit::degrees,
                          .direction = LaunchDirection::right,
@@ -47,7 +47,7 @@ TEST(SimulatorTest, ApexCalculation) {
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
-                         .draw_length = 1.0f,
+                         .draw_length = Length::from_meters(1.0f),
                          .angle = 45.0f,
                          .unit = AngleUnit::degrees,
                          .direction = LaunchDirection::right,
@@ -64,12 +64,12 @@ TEST(SimulatorTest, DegreesSupport) {
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim_deg({.slingshot = sling,
                              .projectile = proj,
-                             .draw_length = 1.0f,
+                             .draw_length = Length::from_meters(1.0f),
                              .angle = 90.0f,
                              .unit = AngleUnit::degrees});
     const Simulator sim_rad({.slingshot = sling,
                              .projectile = proj,
-                             .draw_length = 1.0f,
+                             .draw_length = Length::from_meters(1.0f),
                              .angle = std::numbers::pi_v<float> / 2.0f,
                              .unit = AngleUnit::radians});
 
@@ -86,13 +86,13 @@ TEST(SimulatorTest, DirectionSupport) {
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim_right({.slingshot = sling,
                                .projectile = proj,
-                               .draw_length = 1.0f,
+                               .draw_length = Length::from_meters(1.0f),
                                .angle = 0.0f,
                                .unit = AngleUnit::degrees,
                                .direction = LaunchDirection::right});
     const Simulator sim_left({.slingshot = sling,
                               .projectile = proj,
-                              .draw_length = 1.0f,
+                              .draw_length = Length::from_meters(1.0f),
                               .angle = 0.0f,
                               .unit = AngleUnit::degrees,
                               .direction = LaunchDirection::left});
@@ -112,41 +112,41 @@ TEST(SimulatorTest, AngleValidation) {
     // Test bounds (Explicitly checking 0 and 90 degrees)
     EXPECT_NO_THROW(Simulator({.slingshot = sling,
                                .projectile = proj,
-                               .draw_length = 1.0f,
+                               .draw_length = Length::from_meters(1.0f),
                                .angle = 0.0f,
                                .unit = AngleUnit::degrees}));
     EXPECT_NO_THROW(Simulator({.slingshot = sling,
                                .projectile = proj,
-                               .draw_length = 1.0f,
+                               .draw_length = Length::from_meters(1.0f),
                                .angle = 90.0f,
                                .unit = AngleUnit::degrees}));
     EXPECT_NO_THROW(Simulator({.slingshot = sling,
                                .projectile = proj,
-                               .draw_length = 1.0f,
+                               .draw_length = Length::from_meters(1.0f),
                                .angle = 0.0f,
                                .unit = AngleUnit::radians}));
     EXPECT_NO_THROW(Simulator({.slingshot = sling,
                                .projectile = proj,
-                               .draw_length = 1.0f,
+                               .draw_length = Length::from_meters(1.0f),
                                .angle = std::numbers::pi_v<float> / 2.0f,
                                .unit = AngleUnit::radians}));
 
     // Test out of range (Simulator should throw)
     EXPECT_THROW(Simulator({.slingshot = sling,
                             .projectile = proj,
-                            .draw_length = 1.0f,
+                            .draw_length = Length::from_meters(1.0f),
                             .angle = -0.1f,
                             .unit = AngleUnit::degrees}),
                  std::out_of_range);
     EXPECT_THROW(Simulator({.slingshot = sling,
                             .projectile = proj,
-                            .draw_length = 1.0f,
+                            .draw_length = Length::from_meters(1.0f),
                             .angle = 90.1f,
                             .unit = AngleUnit::degrees}),
                  std::out_of_range);
     EXPECT_THROW(Simulator({.slingshot = sling,
                             .projectile = proj,
-                            .draw_length = 1.0f,
+                            .draw_length = Length::from_meters(1.0f),
                             .angle = 150.0f,
                             .unit = AngleUnit::degrees}),
                  std::out_of_range);
@@ -157,7 +157,7 @@ TEST(SimulatorTest, GetProjectile) {
     const Projectile proj({.mass = Mass::from_kilograms(1.0f)});
     const Simulator sim({.slingshot = sling,
                          .projectile = proj,
-                         .draw_length = 1.0f,
+                         .draw_length = Length::from_meters(1.0f),
                          .angle = 0.0f,
                          .unit = AngleUnit::radians});
 
@@ -171,7 +171,7 @@ TEST(LibraryCoverageTest, AdditionalCoverage) {
     const Slingshot default_sling({.band_stiffness = 100.0f});
     const Simulator default_sim({.slingshot = default_sling,
                                  .projectile = p,
-                                 .draw_length = 1.0f,
+                                 .draw_length = Length::from_meters(1.0f),
                                  .angle = 45.0f,
                                  .unit = AngleUnit::degrees});
     auto [x, y] = default_sim.get_position_at_time({.time = 0.1f});

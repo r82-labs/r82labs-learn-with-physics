@@ -9,7 +9,7 @@ int main() {
     Slingshot slingshot({.band_stiffness = 100.0f, .efficiency = 0.8f});
     Simulator sim({.slingshot = slingshot,
                    .projectile = proj,
-                   .draw_length = 1.0f,
+                   .draw_length = Length::from_meters(1.0f),
                    .angle = 45.0f,
                    .unit = AngleUnit::degrees,
                    .direction = LaunchDirection::right});

@@ -28,9 +28,10 @@ Simulator::Simulator(const SimulatorConfig& config)
         throw std::out_of_range("Launch angle must be between 0 and 90 degrees.");
     }
 
+    const float draw_length_m = config.draw_length.as_meters();
     const float mass_kg = projectile.get_mass().as_kilograms();
     const float v0 =
-        config.draw_length *
+        draw_length_m *
         std::sqrt((config.slingshot.get_efficiency() * config.slingshot.get_stiffness()) /
                   mass_kg);
     const float dir_multiplier = (config.direction == LaunchDirection::right) ? 1.0f : -1.0f;

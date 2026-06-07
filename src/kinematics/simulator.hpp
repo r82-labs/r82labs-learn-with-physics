@@ -8,7 +8,7 @@ namespace r82labs::learn_with_physics {
 struct SimulatorConfig {
     const Slingshot& slingshot;
     const Projectile& projectile;
-    float draw_length = 1.0f;
+    Length draw_length = Length::from_meters(1.0f);
     float angle = 45.0f;
     AngleUnit unit = AngleUnit::radians;
     LaunchDirection direction = LaunchDirection::right;
