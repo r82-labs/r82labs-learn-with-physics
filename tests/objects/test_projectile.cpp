@@ -45,6 +45,12 @@ TEST(CoreTypesTest, RejectsNegativeTime) {
     EXPECT_NO_THROW(Time::from_seconds(0.0f));
 }
 
+TEST(CoreTypesTest, AngleGetters) {
+    const Angle a = Angle::from_degrees(45.0f);
+    EXPECT_FLOAT_EQ(a.as_degrees(), 45.0f);
+    EXPECT_FLOAT_EQ(a.as_radians(), 0.78539816f);
+}
+
 TEST(CoreTypesTest, AngleValidation) {
     EXPECT_NO_THROW(Angle::from_degrees(0.0f));
     EXPECT_NO_THROW(Angle::from_degrees(90.0f));
