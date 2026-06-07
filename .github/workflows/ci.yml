@@ -35,6 +35,15 @@ jobs:
     - name: Run Tests
       run: cd build && ctest --output-on-failure
 
+    - name: Configure Example Consumer
+      run: cmake -S example -B example/build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build Example Consumer
+      run: cmake --build example/build --config Release
+
+    - name: Run Example Consumer
+      run: ./example/build/example_consumer
+
     - name: Generate Coverage Report
       run: |
         lcov --capture --directory build --output-file coverage.info --ignore-errors mismatch,atleast,corrupt
