@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include <numbers>
 #include <stdexcept>
@@ -129,23 +129,32 @@ TEST(SimulatorTest, AngleValidation) {
                                .angle = Angle::from_radians(std::numbers::pi_v<float> / 2.0f)}));
 
     // Test out of range (Simulator should throw)
-    EXPECT_THAT([&]() { Simulator({.slingshot = sling,
-                                   .projectile = proj,
-                                   .draw_length = Length::from_meters(1.0f),
-                                   .angle = Angle::from_degrees(-0.1f)}); },
-                ThrowsMessage<std::out_of_range>(HasSubstr("between 0 and 90 degrees")));
+    EXPECT_THAT(
+        [&]() {
+            Simulator({.slingshot = sling,
+                       .projectile = proj,
+                       .draw_length = Length::from_meters(1.0f),
+                       .angle = Angle::from_degrees(-0.1f)});
+        },
+        ThrowsMessage<std::out_of_range>(HasSubstr("between 0 and 90 degrees")));
 
-    EXPECT_THAT([&]() { Simulator({.slingshot = sling,
-                                   .projectile = proj,
-                                   .draw_length = Length::from_meters(1.0f),
-                                   .angle = Angle::from_degrees(90.1f)}); },
-                ThrowsMessage<std::out_of_range>(HasSubstr("between 0 and 90 degrees")));
+    EXPECT_THAT(
+        [&]() {
+            Simulator({.slingshot = sling,
+                       .projectile = proj,
+                       .draw_length = Length::from_meters(1.0f),
+                       .angle = Angle::from_degrees(90.1f)});
+        },
+        ThrowsMessage<std::out_of_range>(HasSubstr("between 0 and 90 degrees")));
 
-    EXPECT_THAT([&]() { Simulator({.slingshot = sling,
-                                   .projectile = proj,
-                                   .draw_length = Length::from_meters(1.0f),
-                                   .angle = Angle::from_degrees(150.0f)}); },
-                ThrowsMessage<std::out_of_range>(HasSubstr("between 0 and 90 degrees")));
+    EXPECT_THAT(
+        [&]() {
+            Simulator({.slingshot = sling,
+                       .projectile = proj,
+                       .draw_length = Length::from_meters(1.0f),
+                       .angle = Angle::from_degrees(150.0f)});
+        },
+        ThrowsMessage<std::out_of_range>(HasSubstr("between 0 and 90 degrees")));
 }
 
 TEST(SimulatorTest, GetProjectile) {

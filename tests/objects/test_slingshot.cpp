@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <gtest/gtest.h>
 
 #include <stdexcept>
 
@@ -29,7 +29,7 @@ TEST(SlingshotTest, StiffnessUnitConversion) {
 TEST(EfficiencyTest, RejectsInvalidRatios) {
     EXPECT_THAT([]() { Efficiency::from_ratio(-0.1f); },
                 ThrowsMessage<std::invalid_argument>(HasSubstr("between 0 and 1")));
-                
+
     EXPECT_THAT([]() { Efficiency::from_ratio(1.1f); },
                 ThrowsMessage<std::invalid_argument>(HasSubstr("between 0 and 1")));
 
