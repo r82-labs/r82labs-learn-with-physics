@@ -11,7 +11,7 @@ struct SimulatorConfig {
     Length draw_length = Length::from_meters(1.0f);
     Angle angle = Angle::from_radians(45.0f);
     LaunchDirection direction = LaunchDirection::right;
-    float g = 9.81f;
+    Acceleration g = Acceleration::from_meters_per_second_squared(9.81f);
 };
 
 class Simulator {

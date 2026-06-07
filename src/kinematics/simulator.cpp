@@ -7,11 +7,11 @@
 namespace r82labs::learn_with_physics {
 
 Simulator::Simulator(const SimulatorConfig& config)
-    : gravity(config.g),
+    : gravity(config.g.as_meters_per_second_squared()),
       projectile(config.projectile),
       x_velocity_factor(0.0f),
       y_velocity_factor(0.0f),
-      half_gravity_factor(0.5f * config.g) {
+      half_gravity_factor(0.5f * config.g.as_meters_per_second_squared()) {
     const float angle_radians = config.angle.as_radians();
 
     constexpr float epsilon = std::numeric_limits<float>::epsilon();

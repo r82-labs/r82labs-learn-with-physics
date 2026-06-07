@@ -18,7 +18,7 @@ TEST(SimulatorTest, ExactPositionAtTime) {
                          .draw_length = Length::from_meters(1.0f),
                          .angle = Angle::from_radians(0.0f),
                          .direction = LaunchDirection::right,
-                         .g = 10.0f});
+                         .g = Acceleration::from_meters_per_second_squared(10.0f)});
 
     auto [x, y] = sim.get_position_at_time({.time = Time::from_seconds(1.0f)});
 
@@ -35,7 +35,7 @@ TEST(SimulatorTest, GroundTimeCalculation) {
                          .draw_length = Length::from_meters(1.0f),
                          .angle = Angle::from_degrees(45.0f),
                          .direction = LaunchDirection::right,
-                         .g = 10.0f});
+                         .g = Acceleration::from_meters_per_second_squared(10.0f)});
 
     const Time ground_time = sim.get_time_at_ground();
     EXPECT_GT(ground_time.as_seconds(), 0.0f);
@@ -53,7 +53,7 @@ TEST(SimulatorTest, ApexCalculation) {
                          .draw_length = Length::from_meters(1.0f),
                          .angle = Angle::from_degrees(45.0f),
                          .direction = LaunchDirection::right,
-                         .g = 10.0f});
+                         .g = Acceleration::from_meters_per_second_squared(10.0f)});
 
     const PointInTime apex = sim.get_apex_point_in_time();
     EXPECT_NEAR(apex.time.as_seconds(), 0.70710677f, 1e-4f);

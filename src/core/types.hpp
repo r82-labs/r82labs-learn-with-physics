@@ -189,6 +189,25 @@ struct Stiffness {
     }
 };
 
+enum class AccelerationUnit { meters_per_second_squared };
+
+struct Acceleration {
+    float value;
+    AccelerationUnit unit;
+
+    static Acceleration from_meters_per_second_squared(float mpss) {
+        return Acceleration{mpss, AccelerationUnit::meters_per_second_squared};
+    }
+
+    [[nodiscard]] float as_meters_per_second_squared() const {
+        switch (unit) {
+            case AccelerationUnit::meters_per_second_squared:
+                return value;
+        }
+        return value;
+    }
+};
+
 struct Efficiency {
     float value;
 
