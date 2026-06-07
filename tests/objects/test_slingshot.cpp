@@ -24,20 +24,15 @@ TEST(SlingshotTest, StiffnessUnitConversion) {
     EXPECT_NEAR(stiffness_lbf_ft.as_newtons_per_meter(), 14.593903f, 1e-6f);
 }
 
+TEST(EfficiencyTest, RejectsInvalidRatios) {
+    EXPECT_THROW(Efficiency::from_ratio(-0.1f), std::invalid_argument);
+    EXPECT_THROW(Efficiency::from_ratio(1.1f), std::invalid_argument);
+    EXPECT_NO_THROW(Efficiency::from_ratio(0.0f));
+    EXPECT_NO_THROW(Efficiency::from_ratio(1.0f));
+}
+
 TEST(SlingshotTest, RejectsNegativeStiffness) {
     EXPECT_THROW(Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(-10.0f)}),
                  std::invalid_argument);
 }
 
-TEST(SlingshotTest, RejectsInvalidEfficiency) {
-    EXPECT_THROW(Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
-                            .efficiency = Efficiency::from_ratio(-0.1f)}),
-                 std::invalid_argument);
-    EXPECT_THROW(Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
-                            .efficiency = Efficiency::from_ratio(1.1f)}),
-                 std::invalid_argument);
-    EXPECT_NO_THROW(Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
-                               .efficiency = Efficiency::from_ratio(0.0f)}));
-    EXPECT_NO_THROW(Slingshot({.band_stiffness = Stiffness::from_newtons_per_meter(100.0f),
-                               .efficiency = Efficiency::from_ratio(1.0f)}));
-}

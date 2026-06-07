@@ -18,9 +18,6 @@ class Slingshot {
         if (config.band_stiffness.as_newtons_per_meter() < 0.0f) {
             throw std::invalid_argument("band_stiffness must be non-negative");
         }
-        if (config.efficiency.as_ratio() < 0.0f || config.efficiency.as_ratio() > 1.0f) {
-            throw std::invalid_argument("efficiency must be between 0 and 1");
-        }
     }
 
     [[nodiscard]] Stiffness get_stiffness() const { return band_stiffness; }

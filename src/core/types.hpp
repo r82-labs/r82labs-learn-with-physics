@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdexcept>
+
 namespace r82labs::learn_with_physics {
 
 enum class AngleUnit { radians, degrees };
@@ -172,7 +174,12 @@ struct Stiffness {
 struct Efficiency {
     float value;
 
-    static Efficiency from_ratio(float ratio) { return Efficiency{ratio}; }
+    static Efficiency from_ratio(float ratio) {
+        if (ratio < 0.0f || ratio > 1.0f) {
+            throw std::invalid_argument("efficiency ratio must be between 0 and 1");
+        }
+        return Efficiency{ratio};
+    }
 
     [[nodiscard]] float as_ratio() const { return value; }
 };
