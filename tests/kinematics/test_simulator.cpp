@@ -3,7 +3,7 @@
 #include <numbers>
 #include <stdexcept>
 
-#include "library.hpp"
+#include "r82labs_learn_with_physics.hpp"
 
 using namespace r82labs::learn_with_physics;
 
