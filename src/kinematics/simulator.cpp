@@ -6,22 +6,13 @@
 
 namespace r82labs::learn_with_physics {
 
-namespace {
-float to_radians(const float angle, const AngleUnit unit) {
-    if (unit == AngleUnit::radians) {
-        return angle;
-    }
-    return angle * (std::numbers::pi_v<float> / 180.0f);
-}
-}  // namespace
-
 Simulator::Simulator(const SimulatorConfig& config)
     : gravity(config.g),
       projectile(config.projectile),
       x_velocity_factor(0.0f),
       y_velocity_factor(0.0f),
       half_gravity_factor(0.5f * config.g) {
-    const float angle_radians = to_radians(config.angle, config.unit);
+    const float angle_radians = config.angle.as_radians();
 
     constexpr float epsilon = std::numeric_limits<float>::epsilon();
     if (angle_radians < -epsilon || angle_radians > (std::numbers::pi_v<float> / 2.0f + epsilon)) {

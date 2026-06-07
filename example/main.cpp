@@ -10,8 +10,7 @@ int main() {
     Simulator sim({.slingshot = slingshot,
                    .projectile = proj,
                    .draw_length = Length::from_meters(1.0f),
-                   .angle = 45.0f,
-                   .unit = AngleUnit::degrees,
+                   .angle = Angle::from_degrees(45.0f),
                    .direction = LaunchDirection::right});
 
     const Point position = sim.get_position_at_time({.time = Time::from_seconds(0.5f)});

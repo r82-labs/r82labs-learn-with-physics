@@ -114,6 +114,29 @@ struct Time {
     }
 };
 
+struct Angle {
+    float value;
+    AngleUnit unit;
+
+    static Angle from_radians(float radians) {
+        return Angle{radians, AngleUnit::radians};
+    }
+
+    static Angle from_degrees(float degrees) {
+        return Angle{degrees, AngleUnit::degrees};
+    }
+
+    [[nodiscard]] float as_radians() const {
+        switch (unit) {
+            case AngleUnit::radians:
+                return value;
+            case AngleUnit::degrees:
+                return value * (3.14159265358979323846f / 180.0f);
+        }
+        return value;
+    }
+};
+
 struct Point {
     float x;
     float y;
