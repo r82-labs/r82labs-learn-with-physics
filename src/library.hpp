@@ -27,27 +27,20 @@ namespace r82labs::learn_with_physics {
     };
 
     /**
-     * @class MathUtils
-     * @brief Utility functions for physical and mathematical calculations.
-     */
-    class MathUtils {
-    public:
-        /**
-         * @brief Converts an angle to radians.
-         * @param angle The input angle value.
-         * @param unit The unit of the input angle.
-         * @return float The angle value in radians.
-         */
-        [[nodiscard]] static float to_radians(float angle, AngleUnit unit);
-    };
-
-    /**
      * @struct Point
      * @brief A simple structure representing a 2D coordinate.
      */
     struct Point {
         float x; ///< The horizontal coordinate.
         float y; ///< The vertical coordinate.
+    };
+
+    /**
+     * @struct ProjectileConfig
+     * @brief Named parameters for constructing a Projectile.
+     */
+    struct ProjectileConfig {
+        float mass = 0.0f; ///< Mass of the projectile in kg.
     };
 
     /**
@@ -59,12 +52,13 @@ namespace r82labs::learn_with_physics {
 
     public:
         /**
-         * @brief Constructs a Projectile with a specific mass.
-         * @param m Mass in kilograms.
-         * @throws std::invalid_argument if m <= 0.
+         * @brief Constructs a Projectile from a configuration.
+         * @param config Named projectile configuration.
+         * @throws std::invalid_argument if config.mass <= 0.
          */
-        explicit Projectile(float m) : mass(m) {
-            if (m <= 0.0f) {
+        explicit Projectile(const ProjectileConfig& config)
+            : mass(config.mass) {
+            if (config.mass <= 0.0f) {
                 throw std::invalid_argument("mass must be positive");
             }
         }
@@ -77,6 +71,15 @@ namespace r82labs::learn_with_physics {
     };
 
     /**
+     * @struct SlingshotConfig
+     * @brief Named parameters for constructing a Slingshot.
+     */
+    struct SlingshotConfig {
+        float band_stiffness = 0.0f; ///< Stiffness constant of the band (k).
+        float efficiency = 0.75f;    ///< Energy transfer efficiency (eta).
+    };
+
+    /**
      * @class Slingshot
      * @brief Models a physical slingshot with specific stiffness and efficiency.
      */
@@ -86,16 +89,15 @@ namespace r82labs::learn_with_physics {
 
     public:
         /**
-         * @brief Constructs a new Slingshot object.
-         * @param k The band stiffness in N/m.
-         * @param eff The efficiency factor (0.0 to 1.0).
+         * @brief Constructs a new Slingshot object from a configuration.
+         * @param config Named slingshot configuration.
          */
-        explicit Slingshot(float k, float eff = 0.75f)
-            : band_stiffness(k), efficiency(eff) {
-            if (k < 0.0f) {
+        explicit Slingshot(const SlingshotConfig& config)
+            : band_stiffness(config.band_stiffness), efficiency(config.efficiency) {
+            if (config.band_stiffness < 0.0f) {
                 throw std::invalid_argument("band_stiffness must be non-negative");
             }
-            if (eff < 0.0f || eff > 1.0f) {
+            if (config.efficiency < 0.0f || config.efficiency > 1.0f) {
                 throw std::invalid_argument("efficiency must be between 0 and 1");
             }
         }
@@ -104,6 +106,28 @@ namespace r82labs::learn_with_physics {
         [[nodiscard]] float get_stiffness() const { return band_stiffness; }
         /** @brief Gets the efficiency factor (0.0 to 1.0). */
         [[nodiscard]] float get_efficiency() const { return efficiency; }
+    };
+
+    /**
+     * @struct SimulatorConfig
+     * @brief Configuration parameters for creating a Simulator.
+     */
+    struct SimulatorConfig {
+        const Slingshot& slingshot;      ///< The Slingshot used for launch.
+        const Projectile& projectile;     ///< The Projectile being launched.
+        float draw_length = 1.0f;         ///< The draw length in meters.
+        float angle = 45.0f;              ///< The launch angle.
+        AngleUnit unit = AngleUnit::radians; ///< The unit of the provided angle.
+        LaunchDirection direction = LaunchDirection::right; ///< The launch direction.
+        float g = 9.81f;                  ///< Gravity in m/s^2.
+    };
+
+    /**
+     * @struct TimeRequest
+     * @brief Named parameter for requesting a position at a specific time.
+     */
+    struct TimeRequest {
+        float time = 0.0f; ///< Time elapsed since launch in seconds.
     };
 
     /**
@@ -120,19 +144,9 @@ namespace r82labs::learn_with_physics {
     public:
         /**
          * @brief Constructs a Simulator for a configured launch.
-         * @param slingshot The Slingshot used for launch.
-         * @param proj The Projectile being launched.
-         * @param draw_length The draw length in meters.
-         * @param angle The launch angle.
-         * @param unit The unit of the provided angle (defaults to radians).
-         * @param direction The launch direction (defaults to right).
-         * @param g Gravity in \f$ m/s^2 \f$ (defaults to 9.81).
+         * @param config Named simulator configuration.
          */
-        Simulator(const Slingshot& slingshot, const Projectile& proj,
-                  float draw_length, float angle,
-                  AngleUnit unit = AngleUnit::radians,
-                  LaunchDirection direction = LaunchDirection::right,
-                  float g = 9.81f);
+        explicit Simulator(const SimulatorConfig& config);
 
         /**
          * @brief Calculates the position of a projectile at a specific time.
@@ -141,10 +155,10 @@ namespace r82labs::learn_with_physics {
          * \f[ x(t) = f_x \cdot t \f]
          * \f[ y(t) = (f_y - \frac{1}{2} g \cdot t) \cdot t \f]
          * 
-         * @param time Time elapsed since launch in seconds.
+         * @param request Time request with named parameter.
          * @return Point The (x, y) coordinates at time t.
          */
-        [[nodiscard]] Point get_position_at_time(float time) const;
+        [[nodiscard]] Point get_position_at_time(const TimeRequest& request) const;
 
         /**
          * @brief Provides access to the projectile being simulated.
