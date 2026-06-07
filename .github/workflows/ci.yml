@@ -23,7 +23,11 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y doxygen lcov graphviz
+        sudo apt-get install -y doxygen lcov graphviz clang-format
+
+    - name: Check C++ formatting
+      run: |
+        find . -name '*.cpp' -o -name '*.hpp' | sort | xargs clang-format -style=file --dry-run --Werror
 
     - name: Configure CMake (Debug with Coverage)
       run: |
