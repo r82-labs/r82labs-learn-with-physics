@@ -83,16 +83,12 @@ struct Angle {
 };
 
 struct LaunchOrientation {
-    Angle angle;
-    LaunchDirection direction;
+    double radians;
 
-    static LaunchOrientation toward_right(Angle a) { return {a, LaunchDirection::right}; }
-    static LaunchOrientation toward_left(Angle a) { return {a, LaunchDirection::left}; }
+    static LaunchOrientation toward_right(Angle a) { return {a.get_radians()}; }
+    static LaunchOrientation toward_left(Angle a) { return {std::numbers::pi - a.get_radians()}; }
 
-    [[nodiscard]] double get_radians() const {
-        if (direction == LaunchDirection::left) return std::numbers::pi - angle.get_radians();
-        return angle.get_radians();
-    }
+    [[nodiscard]] double get_radians() const { return radians; }
 };
 
 struct Acceleration {
